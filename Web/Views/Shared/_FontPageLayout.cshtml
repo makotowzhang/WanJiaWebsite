@@ -1,0 +1,81 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Css/FrontPage.css" rel="stylesheet" />
+    @RenderSection("css",false)
+    @RenderSection("js",false)
+</head>
+<body>
+    <div class="index-head-menu">
+        <div class="index-head-menu-img">
+            <img src="https://dummyimage.com/100x100" />
+        </div>
+        <div class="index-head-menu-text">
+            <div class="cn">万佳城市广场</div>
+            <div class="en">WANJIACHENGSHIGUANGCHENG</div>
+        </div>
+        <div class="index-head-menu-list">
+            <div>首页</div>
+            <div>
+                企业概况
+                <div class="index-head-list-hidemenu">
+                    <div>经理致辞</div>
+                    <div>企业简介</div>
+                    <div>组织机构</div>
+                    <div>企业荣誉</div>
+                    <div>企业文化</div>
+                </div>
+            </div>
+            <div>新闻中心</div>
+            <div>楼盘风采</div>
+            <div>营销网络</div>
+            <div>信息反馈</div>
+            <div>会员系统</div>
+            <div>联系我们</div>
+        </div>
+
+    </div>
+    <div class="index-content">
+      @RenderBody()
+    </div>
+    <div class="index-bottom">
+        <div class="index-bottom-img">
+            <img src="https://dummyimage.com/400x100" />
+        </div>
+        <div class="index-bottom-menu">
+            <div>企业概况</div>
+            <div>|</div>
+            <div>新闻中心</div>
+            <div>|</div>
+            <div>楼盘风采</div>
+            <div>|</div>
+            <div>营销网络</div>
+            <div>|</div>
+            <div>信息反馈</div>
+            <div>|</div>
+            <div>会员系统</div>
+            <div>|</div>
+            <div>联系我们</div>
+        </div>
+        <div class="index-bottom-cominfo">
+            <img src="https://dummyimage.com/120x120" />
+            <div class="index-bottom-cominfo-info">
+                <div>邮箱:wanjia@163.com</div>
+                <div>咨询热线:400-958-8749</div>
+                <div>QQ:123456789</div>
+                <div>联系地址:盐城市大丰区春柳路6号</div>
+            </div>
+        </div>
+        <div class="index-bottom-copyright">
+            Copyright&copy;2019-2022信息科技有限公司|苏ICP备1606877号盐城市市场监督管理局企业主体身份公示
+        </div>
+    </div>
+</body>
+</html>

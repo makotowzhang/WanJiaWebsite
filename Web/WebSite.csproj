@@ -167,6 +167,7 @@
     <Compile Include="Controllers\AuthorizeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
+    <Compile Include="Controllers\FontPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -182,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\CommonStyle.css" />
+    <Content Include="Content\Css\FrontPage.css" />
     <Content Include="Content\Css\login.css" />
     <Content Include="Content\fileicon\demo.css" />
     <Content Include="Content\fileicon\demo_fontclass.html" />
@@ -655,6 +657,8 @@
     <Content Include="Views\Shared\_Svg.cshtml" />
     <Content Include="Views\Shared\SingleFileUploader.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Shared\_FontPageLayout.cshtml" />
+    <Content Include="Views\FontPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">
