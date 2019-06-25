@@ -185,6 +185,7 @@
     <Content Include="Content\CommonStyle.css" />
     <Content Include="Content\Css\FrontPage.css" />
     <Content Include="Content\Css\login.css" />
+    <Content Include="Content\Css\normalize.css" />
     <Content Include="Content\fileicon\demo.css" />
     <Content Include="Content\fileicon\demo_fontclass.html" />
     <Content Include="Content\fileicon\demo_symbol.html" />
@@ -199,6 +200,7 @@
     <Content Include="Content\iconfont\iconfont.css" />
     <Content Include="Content\iconfont\iconfont.js" />
     <Content Include="Content\iconfont\iconfont.svg" />
+    <Content Include="Content\Images\arrow-right-white.png" />
     <Content Include="Content\Images\login-img.png" />
     <Content Include="Content\Images\login_logo.png" />
     <Content Include="Content\Images\logo.png" />
@@ -214,6 +216,7 @@
     <Content Include="Scripts\Echarts\echarts.min.js" />
     <Content Include="Scripts\ElementUI\css\index.css" />
     <Content Include="Scripts\ElementUI\index.js" />
+    <Content Include="Scripts\JQuery\jquery-1.11.3.min.js" />
     <Content Include="Scripts\PDFJS\build\pdf.js" />
     <Content Include="Scripts\PDFJS\build\pdf.worker.js" />
     <Content Include="Scripts\PDFJS\web\debugger.js" />
@@ -320,6 +323,12 @@
     <Content Include="Scripts\Quill\quill.js" />
     <Content Include="Scripts\Quill\quill.min.js" />
     <Content Include="Scripts\Quill\quill.snow.css" />
+    <Content Include="Scripts\Swiper-4.5.0\css\swiper.css" />
+    <Content Include="Scripts\Swiper-4.5.0\css\swiper.min.css" />
+    <Content Include="Scripts\Swiper-4.5.0\js\swiper.esm.bundle.js" />
+    <Content Include="Scripts\Swiper-4.5.0\js\swiper.esm.js" />
+    <Content Include="Scripts\Swiper-4.5.0\js\swiper.js" />
+    <Content Include="Scripts\Swiper-4.5.0\js\swiper.min.js" />
     <Content Include="Scripts\Vue\vue.common.js" />
     <Content Include="Scripts\Vue\vue.esm.browser.js" />
     <Content Include="Scripts\Vue\vue.esm.js" />
@@ -659,6 +668,7 @@
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Shared\_FontPageLayout.cshtml" />
     <Content Include="Views\FontPage\Index.cshtml" />
+    <Content Include="Scripts\Swiper-4.5.0\js\swiper.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">
