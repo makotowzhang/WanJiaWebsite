@@ -8,11 +8,12 @@
     <link href="~/Scripts/Swiper-4.5.0/css/swiper.min.css" rel="stylesheet" />
     <style>
         .text-title {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 500;
             padding-bottom: 10px;
             border-bottom: 1px solid #162F67;
-            display:inline-block;
+            display: inline-block;
+            color: rgba(51,51,51,1);
         }
         .line {
             height: 1px;
@@ -24,13 +25,15 @@
         }
 
         .top-img-box {
-            display: flex;
+            height:682px;
+            overflow:hidden;
         }
 
             .top-img-box img {
                 width: 100%;
             }
 
+        /*企业概况*/
         .enterprise-info-box {
             padding: 80px 150px;
             height: 380px;
@@ -121,6 +124,7 @@
             width: 100%;
         }
 
+        /*新闻中心*/
         .news-center-box {
             width: 100%;
             background: linear-gradient(90deg,#ffffff 40px,#F8F8F8 40px,#F8F8F8 100%);
@@ -130,9 +134,10 @@
         padding-top:10px;
         }
         .news-center-box-content {
-        padding:20px 150px 50px 150px;
+        padding:50px 150px 50px 150px;
         display:flex;
         align-items:stretch;
+        justify-content:space-between;
         }
         .news-center-box-content-left {
         width:45%;
@@ -142,6 +147,105 @@
             }
             .news-center-box-content-right {
                 width: 55%;
+            }
+
+        .news-content > .title {
+            font-size: 24px;
+            font-weight: 400;
+            color: rgba(51,51,51,1);
+        }
+        .news-content > .prop {
+            font-size: 16px;
+            font-weight: 400;
+            color: rgba(116,116,116,1);
+            margin-top:20px;
+        }
+        .news-content > .content {
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(51,51,51,1);
+            margin-top: 20px;
+        }
+        .news-center-box-content-right {
+        flex-grow:1;
+        width:0;
+        margin-left:60px;
+        }
+        .news-classify {
+        display:flex;
+        font-size:18px;
+        height:40px;
+        position:relative;
+        color:#333333;
+        }
+            .news-classify > .classify {
+                height: 100%;
+                padding:0 10px;
+            }
+        .current-classify {
+            color: #162F67;
+            border-bottom: 1px solid #162F67;
+            z-index:100;
+        }
+        .news-classify > .classify:nth-child(n+2) {
+            margin-left: 40px;
+        }
+
+        .news-classify-content > div {
+        display:flex;
+        margin-top:40px;
+        align-items:flex-start;
+        }
+            .news-classify-content > div > .numberbox {
+                font-size: 60px;
+                color: rgba(154,154,154,1);
+                padding-right: 24px;
+                margin-right: 24px;
+                border-right: 1px solid #757575;
+            }
+        /*楼盘风采*/
+        .building-box {
+            width: 100%;
+            margin-top:40px;
+        }
+        .building-title {
+            padding-left: 150px;
+        }
+        .building-content {
+            padding: 60px 150px;
+            display: flex;
+        }
+            .building-content > div {
+            height:630px;
+            }
+        .swiper-nav {
+            height: 100%;
+            width: 40px;
+            background-color: #E2E9EF;
+            display: flex;
+            align-items: center;
+        }
+        .swiper-nav img{
+        width:100%;
+        }
+        .building-intro {
+            width: 350px;
+            height:100%;
+            display: flex;
+            flex-direction: column;
+        }
+            .building-intro > .imgbox {
+            width:350px;
+            height:410px;
+            background-repeat:no-repeat;
+            background-size:cover;
+            }
+            .building-intro > .contentbox {
+                background-color: #F2F2F2;
+                display:flex;
+                flex-direction:column;
+                flex-grow:1;
+                padding:25px;
             }
     </style>
 }
@@ -161,91 +265,173 @@
         });
     </script>
 }
-<div class="body-content">
-    <div class="top-img-box"><img src="https://dummyimage.com/2400x600" /></div>
-    <div class="enterprise-info-box">
-        <div class="enterprise-info-box-head">
-            <div style="font-size:16px;margin-top:50px;">
-                企业概况
+    <div class="body-content">
+        <div class="top-img-box"><img src="~/Content/pcimage/1.jpg" /></div>
+        <div class="enterprise-info-box">
+            <div class="enterprise-info-box-head">
+                <div style="font-size:22px;margin-top:50px;">
+                    企业概况
+                </div>
+                <div style="font-size:12px;margin-top:10px">ENTERPRISE SURVEY</div>
+                <div style="height:2px;width:20px; background-color:white;margin-top:10px"></div>
             </div>
-            <div style="font-size:12px;margin-top:10px">ENTERPRISE SURVEY</div>
-            <div style="height:2px;width:20px; background-color:white;margin-top:10px"></div>
+            <div class="enterprise-info-swiper swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="~/Content/pcimage/10.jpg" />
+                        <div class="enterprise-info-slide-text">
+                            <div class="text-top">
+                                设置为true 则开启loop模式。loop模式：会在原本slide前后复制若干个slide(默认一个)并在合适的时候切换，让Swiper看起来是循环的。
+                                loop模式在与free模式同用时会产生抖动，因为free模式下没有复制slide的时间点。
+                            </div>
+                            <div class="text-bottom">
+                                <div>
+                                    企业简介
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="~/Content/pcimage/11.jpg" />
+                        <div class="enterprise-info-slide-text">
+                            <div class="text-top">
+                                设置为true 则开启loop模式。loop模式：会在原本slide前后复制若干个slide(默认一个)并在合适的时候切换，让Swiper看起来是循环的。
+                                loop模式在与free模式同用时会产生抖动，因为free模式下没有复制slide的时间点。
+                            </div>
+                            <div class="text-bottom">
+                                <div>
+                                    经理致辞
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="~/Content/pcimage/10.jpg" />
+                        <div class="enterprise-info-slide-text">
+                            <div class="text-top">
+                                设置为true 则开启loop模式。loop模式：会在原本slide前后复制若干个slide(默认一个)并在合适的时候切换，让Swiper看起来是循环的。
+                                loop模式在与free模式同用时会产生抖动，因为free模式下没有复制slide的时间点。
+                            </div>
+                            <div class="text-bottom">
+                                <div>
+                                    组织机构
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="enterprise-info-next">
+                <img src="~/Content/Images/arrow-right-white.png" />
+            </div>
         </div>
-        <div class="enterprise-info-swiper swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="https://dummyimage.com/600x400/3f6" />
-                    <div class="enterprise-info-slide-text">
-                        <div class="text-top">
+
+        <div class="news-center-box">
+            <div class="news-center-box-title">
+                <div class="text-title">新闻中心</div>
+            </div>
+            <div class="line"></div>
+            <div class="news-center-box-content">
+                <div class="news-center-box-content-left">
+                    <div>
+                        <img src="~/Content/pcimage/13.jpg" />
+                    </div>
+                    <div class="news-content" style="margin-top:20px;">
+                        <div class="title">
+                            【万家城市广场】
+                        </div>
+                        <div class="prop">
+                            发布者:万家  浏览次数:999
+                        </div>
+                        <div class="content">
                             设置为true 则开启loop模式。loop模式：会在原本slide前后复制若干个slide(默认一个)并在合适的时候切换，让Swiper看起来是循环的。
                             loop模式在与free模式同用时会产生抖动，因为free模式下没有复制slide的时间点。
-                        </div>
-                        <div class="text-bottom">
-                            <div>
-                                企业简介
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://dummyimage.com/600x400/66ccff" />
-                    <div class="enterprise-info-slide-text">
-                        <div class="text-top">
-                            设置为true 则开启loop模式。loop模式：会在原本slide前后复制若干个slide(默认一个)并在合适的时候切换，让Swiper看起来是循环的。
-                            loop模式在与free模式同用时会产生抖动，因为free模式下没有复制slide的时间点。
-                        </div>
-                        <div class="text-bottom">
-                            <div>
-                                经理致辞
+                <div class="news-center-box-content-right">
+                    <div class="news-classify">
+                        <div class="classify current-classify">企业新闻</div>
+                        <div class="classify">行业新闻</div>
+                        <div style="width:100%;height:1px;background-color:#E9E9E9;position:absolute;left:0;bottom:0;"></div>
+                    </div>
+                    <div class="news-classify-content">
+                        <div>
+                            <div class="numberbox">01</div>
+                            <div class="news-content">
+                                <div class="title">
+                                    【万家城市广场】
+                                </div>
+                                <div class="prop">
+                                    发布者:万家  浏览次数:999
+                                </div>
+                                <div class="content">
+                                    设置为true 则开启loop模式。loop模式：会在原本slide前后复制若干个slide(默认一个)并在合适的时候切换，让Swiper看起来是循环的。
+                                    loop模式在与free模式同用时会产生抖动，因为free模式下没有复制slide的时间点。
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://dummyimage.com/600x400/ff9900" />
-                    <div class="enterprise-info-slide-text">
-                        <div class="text-top">
-                            设置为true 则开启loop模式。loop模式：会在原本slide前后复制若干个slide(默认一个)并在合适的时候切换，让Swiper看起来是循环的。
-                            loop模式在与free模式同用时会产生抖动，因为free模式下没有复制slide的时间点。
-                        </div>
-                        <div class="text-bottom">
-                            <div>
-                                组织机构
+                    <div class="news-classify-content">
+                        <div>
+                            <div class="numberbox">02</div>
+                            <div class="news-content">
+                                <div class="title">
+                                    【万家城市广场】
+                                </div>
+                                <div class="prop">
+                                    发布者:万家  浏览次数:999
+                                </div>
+                                <div class="content">
+                                    设置为true 则开启loop模式。loop模式：会在原本slide前后复制若干个slide(默认一个)并在合适的时候切换，让Swiper看起来是循环的。
+                                    loop模式在与free模式同用时会产生抖动，因为free模式下没有复制slide的时间点。
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="enterprise-info-next">
-            <img src="~/Content/Images/arrow-right-white.png" />
+
+        <div class="building-box">
+            <div class="building-title">
+                <div class="text-title">楼盘风采</div>
+            </div>
+            <div class="line"></div>
+         <div class="building-content">
+             <div class="swiper-nav">
+                 <img style="transform:rotateY(180deg)" src="~/Content/Images/arrow-right-white.png" />
+             </div>
+             <div style="flex-grow:1;">
+                 <div class="swiper-wrapper">
+                     <div class="swiper-slide">
+                         <div class="building-intro">
+                             <div class="imgbox" style="background-image:url('/Content/pcimage/7.jpg')"></div>
+                             <div class="contentbox">
+                                 <div>万佳·楼盘风采</div>
+                                 <div>
+                                     地点：盐城市世纪大道33号卡迪欢乐世...
+                                     电话：0515-88888878
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                     @*<div class="swiper-slide">
+                         <div class="building-intro">
+                             <img src="~/Content/pcimage/8.jpg" />
+                         </div>
+                     </div>
+                     <div class="swiper-slide">
+                         <div class="building-intro">
+                             <img src="~/Content/pcimage/10.jpg" />
+                         </div>
+                     </div>*@
+                 </div>
+             </div>
+             <div class="swiper-nav">
+                 <img src="~/Content/Images/arrow-right-white.png" />
+             </div>
+         </div>
         </div>
     </div>
-
-    <div class="news-center-box">
-        <div class="news-center-box-title">
-            <div class="text-title">新闻中心</div>
-        </div>
-        <div class="line"></div>
-        <div class="news-center-box-content">
-            <div class="news-center-box-content-left">
-                <div>
-                    <img src="https://dummyimage.com/400x200" />
-                </div>
-                <div>
-                    【万家城市广场】
-                </div>
-                <div>
-                    发布者:万家  浏览次数:999
-                </div>
-                <div>
-                    设置为true 则开启loop模式。loop模式：会在原本slide前后复制若干个slide(默认一个)并在合适的时候切换，让Swiper看起来是循环的。
-                    loop模式在与free模式同用时会产生抖动，因为free模式下没有复制slide的时间点。
-                </div>
-            </div>
-            <div class="news-center-box-content-right">
-
-            </div>
-        </div>
-    </div>
-</div>
