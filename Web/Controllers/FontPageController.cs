@@ -13,5 +13,10 @@ namespace WebSite.Controllers
         {
             return View();
         }
+
+        public ActionResult EnterPriseIntroduction()
+        {
+            return View();
+        }
     }
 }

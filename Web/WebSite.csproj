@@ -201,6 +201,7 @@
     <Content Include="Content\iconfont\iconfont.js" />
     <Content Include="Content\iconfont\iconfont.svg" />
     <Content Include="Content\Images\arrow-right-white.png" />
+    <Content Include="Content\Images\arrow-up-white.png" />
     <Content Include="Content\Images\login-img.png" />
     <Content Include="Content\Images\login_logo.png" />
     <Content Include="Content\Images\logo.png" />
@@ -689,6 +690,7 @@
     <Content Include="Views\Shared\_FontPageLayout.cshtml" />
     <Content Include="Views\FontPage\Index.cshtml" />
     <Content Include="Scripts\Swiper-4.5.0\js\swiper.min.js.map" />
+    <Content Include="Views\FontPage\EnterPriseIntroduction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">

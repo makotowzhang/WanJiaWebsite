@@ -1,0 +1,247 @@
+﻿
+@{
+    ViewBag.Title = "企业概况";
+    Layout = "~/Views/Shared/_FontPageLayout.cshtml";
+}
+@section css{
+    <style>
+        .body-content {
+            width: 100%;
+            height: 100%;
+        }
+
+        .top-img-box {
+            height: 682px;
+            overflow: hidden;
+        }
+
+            .top-img-box img {
+                width: 100%;
+            }
+        /*简介*/
+        .top-introduce {
+            margin-top: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .introduce-content-tab {
+            width: 500px;
+            display: flex;
+        }
+
+            .introduce-content-tab div {
+                flex-grow: 1;
+            }
+
+            .introduce-content-tab .alive-text {
+                font-size: 24px;
+                color: rgba(22,47,103,1);
+                justify-content: center;
+                display: flex;
+                align-items: center;
+                height: 40px;
+            }
+
+            .introduce-content-tab .alive-circle {
+                height: 40px;
+                display: flex;
+                align-items: center;
+            }
+
+        .alive-circle .blank {
+            flex-grow: 1;
+            width: 0;
+            height: 100%;
+        }
+
+        .alive-circle .circle {
+            height: 28px;
+            width: 28px;
+            border: 6px solid #A2ACC2;
+            background-color: rgb(22,47,103);
+            border-radius: 100px;
+            flex-grow: 0;
+        }
+
+        .alive-circle .line {
+            flex-grow: 1;
+            width: 0;
+            height: 1px;
+            background-color: rgba(22,47,103,0.4);
+        }
+
+        .introduce-content-tab .disable-text {
+            font-size: 18px;
+            color: rgba(153,153,153,1);
+            justify-content: center;
+            display: flex;
+            align-items: center;
+            height: 40px;
+        }
+
+        .introduce-content-tab .disable-circle {
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .disable-circle .blank {
+            flex-grow: 1;
+            width: 0;
+            height: 100%;
+        }
+
+        .disable-circle .circle {
+            height: 24px;
+            width: 24px;
+            border: 6px solid #EEEEEE;
+            background-color: #BBBBBB;
+            border-radius: 100px;
+            flex-grow: 0;
+        }
+
+        .disable-circle .line {
+            flex-grow: 1;
+            width: 0;
+            height: 1px;
+            background-color: rgba(22,47,103,0.4);
+        }
+
+        .introduce-content-box {
+            padding: 0 200px;
+            margin-top: 60px;
+            min-height: 400px;
+            display:flex;
+            align-content:stretch;
+        }
+            .introduce-content-box .content {
+                flex-grow: 1;
+                padding: 65px 40px 100px 80px;
+                width: 0;
+                background-color: #F1F0F0;
+            }
+            .introduce-content-box .image {
+            width:700px;
+            background-size:cover;
+            background-repeat:no-repeat;
+            background-image:url('/Content/pcimage/5.jpg');
+            }
+/*发展计划*/
+        .devplan {
+            margin-top: 160px;
+            background-color: #4B679F;
+            padding:70px 300px 30px 300px;
+        }
+        .devplan-title {
+            font-size: 28px;
+            font-weight: normal;
+            color: rgba(255,255,255,1);
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            letter-spacing:3px;
+        }
+        .devplan-content {
+        margin-top:20px;
+        display:flex;
+        align-items:stretch;
+        }
+        .devplan-content-left {
+        width:300px;
+        }
+            .devplan-content-left > div {
+                text-align: center;
+                padding: 5px 0;
+                color: #BFBFBF;
+                font-size: 26px;
+            }
+            .devplan-content-left > div.current {
+            color:white;
+            font-size:30px;
+            }
+            .devplan-content-right {
+                width: 0;
+                flex-grow: 1;
+                color: white;
+            }
+        .devplan-image {
+        height:200px;
+        }
+    </style>
+}
+    <div class="body-content">
+        <div class="top-img-box"><img src="~/Content/pcimage/1.jpg" /></div>
+        <div class="top-introduce">
+            <div class="introduce-content-tab">
+                <div>
+                    <div class="alive-text">
+                        企业简介
+                    </div>
+                    <div class="alive-circle">
+                        <div class="blank"></div>
+                        <div class="circle"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="disable-text">董事长致辞</div>
+                    <div class="disable-circle">
+                        <div class="line"></div>
+                        <div class="circle"></div>
+                        <div class="blank"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="introduce-content-box">
+            <div class="content">
+                <div style="font-size:24px;color:rgba(51,51,51,1);">万佳城市广场</div>
+                <div style="width:150px;height:1px;background-color:#E1C69C;margin-top:25px;"></div>
+                <div style="margin-top:45px;font-size:16px;color:rgba(102,102,102,1);line-height:24px;">
+                    万佳城市广场由万达公馆、万佳复式公寓、大丰中心写字楼、
+                    超级购物中心、大型生活超市等核心板块构成，形成了其独特的
+                    “一座万佳城市广场，一个城市中心”的新商业组合。集合全球优质资源，
+                    颠覆大丰城市商业格局，成就城市高端生活圈，荣铸专属顶级生活平台。
+                    更有“世界500强万达旗下万达嘉华酒店、万达巨幕影城 ”等多重主力店助力。
+                    万佳城市广场由万达公馆、万佳复式公寓、大丰中心写字楼、超级购物中心、
+                    大型生活超市等核心板块构成，形成了其独特的“一座万佳城市广场，一个城市中心”的新商业组合。
+                </div>
+            </div>
+            <div class="image">
+
+            </div>
+        </div>
+        <div class="devplan">
+            <div class="devplan-title">
+            发展规划
+                <div style="height:3px;width:50px; background-color:white;margin-top:30px;"></div>
+            </div>
+            <div class="devplan-content">
+                <div class="devplan-content-left">
+                    <div><img src="~/Content/Images/arrow-up-white.png" style="height:30px;" /> </div>
+                    <div class="current">2019-2020</div>
+                    <div>2017-2018</div>
+                    <div>2016-2017</div>
+                    <div>2015-2016</div>
+                    <div>2010-2016</div>
+                    <div><img src="~/Content/Images/arrow-up-white.png" style="height:30px;transform:rotateX(180deg)" /></div>
+                </div>
+                <div class="devplan-content-right">
+                    <div class="devplan-image"></div>
+                    <div class="devplan-text-title">取得行业排名前五的好成绩</div>
+                    <div class="devplan-text-content">
+                        物流的概念最早是在美国形成的，起源于20世纪30年代，原意为“实物分配”或“货物配送”。1963年被引入日本，日文意思是“物的流通”。20世纪70年代后，日本的“物流”一词逐渐取代了“物的流通”。
+                        中国的“物流”一词是从日文资料引进来的外来词，源于日文资料中对"Logistics"一词的翻译“物流”。
+                        中国的物流术语标准将物流定义为：物流是物品从供应地向接收地的实体流动过程中，根据实际需要，将运输、储存、装卸搬运、包装、流通加工、配送、信息处理等功能有机结合起来实现用户要求的过程。
+                        物流的概念最早是在美国形成的，起源于20世纪30年代，原意为“实物分配”或“货物配送”。1963年被引入日本，日文意思是“物的流通”。20世纪70年代后，日本的“物流”一词逐渐取代了“物的流通”。
+                        中国的“物流”一词是从日文资料引进来的外来词，源于日文资料中对"Logistics"一词的翻译“物流”。
+                        中国的物流术语标准将物流定义为：物流是物品从供应地向
+                        接收地的实体流动过程中，根据实际需要，将运输、储存、装卸搬运、包装、流通加工、配送、信息处理等功能有机结合起来实现用户要求的过程。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
