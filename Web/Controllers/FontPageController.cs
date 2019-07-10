@@ -18,5 +18,10 @@ namespace WebSite.Controllers
         {
             return View();
         }
+
+        public ActionResult NewsCenter()
+        {
+            return View();
+        }
     }
 }
