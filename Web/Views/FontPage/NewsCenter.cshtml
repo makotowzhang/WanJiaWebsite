@@ -3,6 +3,264 @@
     ViewBag.Title = "新闻中心";
     Layout = "~/Views/Shared/_FontPageLayout.cshtml";
 }
+@section css{
+    <style>
+        .body-content {
+            width: 100%;
+            height: 100%;
+        }
 
-<h2>NewsCenter</h2>
+        .top-img-box {
+            height: 500px;
+            background-image: url("/Content/pcimage/1.jpg");
+            background-size: cover;
+        }
 
+        .top-img-box-modal {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+        }
+
+            .top-img-box-modal > div {
+                width: 100%;
+            }
+
+                .top-img-box-modal > div > div {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    color: white;
+                }
+
+        .top-line {
+            height: 2px;
+            width: 150px;
+            background-color: rgba(255,255,255,0.5);
+        }
+        /*标题*/
+        .commtitle {
+            margin-top: 100px;
+        }
+
+            .commtitle > div {
+                display: flex;
+                justify-content: center;
+            }
+
+            .commtitle > .cname {
+                display: flex;
+                align-items: center;
+            }
+
+                .commtitle > .cname > .line {
+                    height: 2px;
+                    background-color: rgba(102,102,102,0.4);
+                    width: 80px;
+                }
+
+                .commtitle > .cname > .text {
+                    font-size: 26px;
+                    color: rgba(51,51,51,1);
+                    margin: 0 30px;
+                }
+
+            .commtitle > .ename {
+                color: #999999;
+                font-size: 22px;
+                margin-top: 15px;
+            }
+
+        .newslist {
+            margin-top: 80px;
+            padding: 0 200px;
+            display: flex;
+        }
+
+        .newslist-nav {
+            width: 150px;
+        }
+
+            .newslist-nav > div {
+                color: #333333;
+                padding: 10px 0 10px 15px;
+                border-top: 1px solid #E7E7E7;
+                font-size: 18px;
+            }
+
+
+
+        .newslist-content {
+            margin-left: 20px;
+            flex-grow: 1;
+        }
+
+            .newslist-content > div {
+                display: flex;
+                padding: 0 10px 20px 0;
+                border-bottom: 1px solid #CCCCCC;
+                width: 100%;
+            }
+
+                .newslist-content > div:nth-child(n+2) {
+                    margin-top: 20px;
+                }
+
+            .newslist-content .img-box {
+                width: 240px;
+                height: 160px;
+                background-size: cover;
+            }
+
+            .newslist-content .content-box {
+                margin-left: 20px;
+                width: 0;
+                flex-grow: 1;
+            }
+        .pagination{
+            display:flex;
+            justify-content:flex-end;
+            padding-right:200px;
+            margin:80px 0;
+            align-items:center;
+        }
+        .pageBtn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 18px;
+            border: 1px solid #D2D2D2;
+            border-radius: 5px;
+            color: #757575;
+            cursor:pointer;
+        }
+        .gotoPage {
+            margin: 0 20px;;
+            font-size: 18px;
+        }
+            .gotoPage > input {
+                height:30px;
+                width: 60px;
+                border-radius: 5px;
+                border: 1px solid #D2D2D2;
+                text-align: center;
+            }
+            .currentPage {
+                margin-left: 10px;
+                padding: 5px 10px;
+                font-size: 18px;
+                border: 1px solid #162F67;
+                background-color: #162F67;
+                border-radius: 5px;
+                color: white;
+                cursor: pointer;
+            }
+
+    </style>
+}
+<div class="body-content">
+    <div class="top-img-box">
+        <div class="top-img-box-modal">
+            <div>
+                <div>
+                    <span style="font-size:54px;">新闻中心&nbsp;</span>
+                    <span style="font-size:36px;align-self:flex-end;font-style:italic">NEWS</span>
+                </div>
+                <div style="margin-top:20px;">
+                    <div class="top-line"></div>
+                    <div style="margin:0 20px;font-size:20px;">有趣的资讯&nbsp;资讯的有趣 </div>
+                    <div class="top-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="commtitle">
+        <div class="cname">
+            <div class="line"></div>
+            <div class="text">新闻中心</div>
+            <div class="line"></div>
+        </div>
+        <div class="ename">NEWS CENTRES</div>
+    </div>
+
+    <div class="newslist">
+        <div class="newslist-nav">
+            <div>企业新闻</div>
+            <div>行业新闻</div>
+        </div>
+        <div class="newslist-content">
+            <div>
+                <div class="img-box" style="background-image:url('/Content/pcimage/18.jpg')"></div>
+                <div class="content-box">
+                    <div style="font-size:20px;">从整体趋势出发，商业地产是阵地战</div>
+                    <div style="font-size:16px;color:#858585;line-height:30px;margin-top:10px;">从整体行业趋势来分析，商业地产是阵地战，一、二线城市商业竞争压力太大，供给过剩，三四线城市却面临初级商圈急待提档升级的局面，体验、休闲、娱乐不足...</div>
+                    <div style="display:flex;margin-top:20px; align-items:flex-end;justify-content:space-between;">
+                        <div style="font-size:14px;color:#858585;">[2019/06/11]</div>
+                        <div style="font-size:16px; color:#162F67;">更多详情&nbsp; >></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="img-box" style="background-image:url('/Content/pcimage/18.jpg')"></div>
+                <div class="content-box">
+                    <div style="font-size:20px;">从整体趋势出发，商业地产是阵地战</div>
+                    <div style="font-size:16px;color:#858585;line-height:30px;margin-top:10px;">从整体行业趋势来分析，商业地产是阵地战，一、二线城市商业竞争压力太大，供给过剩，三四线城市却面临初级商圈急待提档升级的局面，体验、休闲、娱乐不足...</div>
+                    <div style="display:flex;margin-top:20px; align-items:flex-end;justify-content:space-between;">
+                        <div style="font-size:14px;color:#858585;">[2019/06/11]</div>
+                        <div style="font-size:16px; color:#162F67;">更多详情&nbsp; >></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="img-box" style="background-image:url('/Content/pcimage/18.jpg')"></div>
+                <div class="content-box">
+                    <div style="font-size:20px;">从整体趋势出发，商业地产是阵地战</div>
+                    <div style="font-size:16px;color:#858585;line-height:30px;margin-top:10px;">从整体行业趋势来分析，商业地产是阵地战，一、二线城市商业竞争压力太大，供给过剩，三四线城市却面临初级商圈急待提档升级的局面，体验、休闲、娱乐不足...</div>
+                    <div style="display:flex;margin-top:20px; align-items:flex-end;justify-content:space-between;">
+                        <div style="font-size:14px;color:#858585;">[2019/06/11]</div>
+                        <div style="font-size:16px; color:#162F67;">更多详情&nbsp; >></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="img-box" style="background-image:url('/Content/pcimage/18.jpg')"></div>
+                <div class="content-box">
+                    <div style="font-size:20px;">从整体趋势出发，商业地产是阵地战</div>
+                    <div style="font-size:16px;color:#858585;line-height:30px;margin-top:10px;">从整体行业趋势来分析，商业地产是阵地战，一、二线城市商业竞争压力太大，供给过剩，三四线城市却面临初级商圈急待提档升级的局面，体验、休闲、娱乐不足...</div>
+                    <div style="display:flex;margin-top:20px; align-items:flex-end;justify-content:space-between;">
+                        <div style="font-size:14px;color:#858585;">[2019/06/11]</div>
+                        <div style="font-size:16px; color:#162F67;">更多详情&nbsp; >></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="img-box" style="background-image:url('/Content/pcimage/18.jpg')"></div>
+                <div class="content-box">
+                    <div style="font-size:20px;">从整体趋势出发，商业地产是阵地战</div>
+                    <div style="font-size:16px;color:#858585;line-height:30px;margin-top:10px;">从整体行业趋势来分析，商业地产是阵地战，一、二线城市商业竞争压力太大，供给过剩，三四线城市却面临初级商圈急待提档升级的局面，体验、休闲、娱乐不足...</div>
+                    <div style="display:flex;margin-top:20px; align-items:flex-end;justify-content:space-between;">
+                        <div style="font-size:14px;color:#858585;">[2019/06/11]</div>
+                        <div style="font-size:16px; color:#162F67;">更多详情&nbsp; >></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+        <div class="currentPage">1</div>
+        <div class="pageBtn">2</div>
+        <div class="pageBtn">3</div>
+        <div class="pageBtn">4</div>
+        <div class="pageBtn">下一页</div>
+        <div class="gotoPage">
+            到第
+            <input type="number" min="1"/>
+            页
+        </div>
+        <button class="currentPage" type="button">
+            确定
+        </button>
+    </div>
+</div>
