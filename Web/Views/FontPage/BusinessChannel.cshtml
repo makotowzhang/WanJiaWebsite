@@ -1,0 +1,253 @@
+﻿
+@{
+    ViewBag.Title = "营销网络";
+    Layout = "~/Views/Shared/_FontPageLayout.cshtml";
+}
+@section css{
+    <style>
+        .body-content {
+            width: 100%;
+            height: 100%;
+        }
+
+        .top-img-box {
+            height: 500px;
+            background-image: url("/Content/pcimage/1.jpg");
+            background-size: cover;
+        }
+
+        .top-img-box-modal {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+        }
+
+            .top-img-box-modal > div {
+                width: 100%;
+            }
+
+                .top-img-box-modal > div > div {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    color: white;
+                }
+
+        .top-line {
+            height: 2px;
+            width: 150px;
+            background-color: rgba(255,255,255,0.5);
+        }
+        /*标题*/
+        .commtitle {
+            margin-top: 100px;
+        }
+
+            .commtitle > div {
+                display: flex;
+                justify-content: center;
+            }
+
+            .commtitle > .cname {
+                display: flex;
+                align-items: center;
+            }
+
+                .commtitle > .cname > .line {
+                    height: 2px;
+                    background-color: rgba(102,102,102,0.4);
+                    width: 80px;
+                }
+
+                .commtitle > .cname > .text {
+                    font-size: 26px;
+                    color: rgba(51,51,51,1);
+                    margin: 0 30px;
+                }
+
+            .commtitle > .ename {
+                color: #999999;
+                font-size: 22px;
+                margin-top: 15px;
+            }
+
+        .channel-list {
+            margin-top: 60px;
+            padding: 0px 200px;
+        }
+
+        .channel-item {
+            display: flex;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #CCCCCC;
+            margin-bottom:30px;
+        }
+
+        .channel-item-img {
+            background-size: cover;
+            height: 150px;
+            width: 240px;
+        }
+
+        .channel-item-content {
+            width: 0;
+            flex-grow: 1;
+            margin-left: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content:space-between;
+        }
+            .channel-item-content .title {
+                font-size:24px;
+            }
+            .channel-item-content .text {
+                color: #858585;
+                font-size:18px;
+                line-height:30px;
+            }
+            .channel-item-content .price {
+                
+                text-align: right;
+                padding-right: 20px;
+                font-size: 18px;
+                color: #F31E1E;
+            }
+        /*分页*/
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 200px;
+            margin: 80px 0;
+            align-items: center;
+        }
+
+        .pageBtn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 18px;
+            border: 1px solid #D2D2D2;
+            border-radius: 5px;
+            color: #757575;
+            cursor: pointer;
+        }
+
+        .gotoPage {
+            margin: 0 20px;
+            font-size: 18px;
+        }
+
+            .gotoPage > input {
+                height: 30px;
+                width: 60px;
+                border-radius: 5px;
+                border: 1px solid #D2D2D2;
+                text-align: center;
+            }
+
+        .currentPage {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 18px;
+            border: 1px solid #162F67;
+            background-color: #162F67;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+}
+    <div class="body-content">
+        <div class="top-img-box">
+            <div class="top-img-box-modal">
+                <div>
+                    <div>
+                        <span style="font-size:54px;">招商渠道&nbsp;</span>
+                        <span style="font-size:36px;align-self:flex-end;font-style:italic">CHANNEL</span>
+                    </div>
+                    <div style="margin-top:20px;">
+                        <div class="top-line"></div>
+                        <div style="margin:0 20px;font-size:20px;">若您有需要 &nbsp;我们随时在 </div>
+                        <div class="top-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="commtitle">
+            <div class="cname">
+                <div class="line"></div>
+                <div class="text">招商渠道</div>
+                <div class="line"></div>
+            </div>
+            <div class="ename">ATTRACT INVESTMENT</div>
+        </div>
+
+        <div class="channel-list">
+            <div class="channel-item">
+                <div class="channel-item-img" style="background-image:url('/Content/pcimage/15.jpg')"></div>
+                <div class="channel-item-content">
+                    <div class="title">【万佳地产招商】万佳地产招商</div>
+                    <div class="text">招商模式2.0，产业链（产业集群）招商，以搭建产业链、打造产业集群、提升产业竞争力为目标，是升级版招商，也是目前很多地方在实施。     </div>
+                    <div class="price">投资金额：10万-12万</div>
+                </div>
+            </div>
+            <div class="channel-item">
+                <div class="channel-item-img" style="background-image:url('/Content/pcimage/15.jpg')"></div>
+                <div class="channel-item-content">
+                    <div class="title">【万佳地产招商】万佳地产招商</div>
+                    <div class="text">招商模式2.0，产业链（产业集群）招商，以搭建产业链、打造产业集群、提升产业竞争力为目标，是升级版招商，也是目前很多地方在实施。     </div>
+                    <div class="price">投资金额：10万-12万</div>
+                </div>
+            </div>
+            <div class="channel-item">
+                <div class="channel-item-img" style="background-image:url('/Content/pcimage/15.jpg')"></div>
+                <div class="channel-item-content">
+                    <div class="title">【万佳地产招商】万佳地产招商</div>
+                    <div class="text">招商模式2.0，产业链（产业集群）招商，以搭建产业链、打造产业集群、提升产业竞争力为目标，是升级版招商，也是目前很多地方在实施。     </div>
+                    <div class="price">投资金额：10万-12万</div>
+                </div>
+            </div>
+            <div class="channel-item">
+                <div class="channel-item-img" style="background-image:url('/Content/pcimage/15.jpg')"></div>
+                <div class="channel-item-content">
+                    <div class="title">【万佳地产招商】万佳地产招商</div>
+                    <div class="text">招商模式2.0，产业链（产业集群）招商，以搭建产业链、打造产业集群、提升产业竞争力为目标，是升级版招商，也是目前很多地方在实施。     </div>
+                    <div class="price">投资金额：10万-12万</div>
+                </div>
+            </div>
+            <div class="channel-item">
+                <div class="channel-item-img" style="background-image:url('/Content/pcimage/15.jpg')"></div>
+                <div class="channel-item-content">
+                    <div class="title">【万佳地产招商】万佳地产招商</div>
+                    <div class="text">招商模式2.0，产业链（产业集群）招商，以搭建产业链、打造产业集群、提升产业竞争力为目标，是升级版招商，也是目前很多地方在实施。     </div>
+                    <div class="price">投资金额：10万-12万</div>
+                </div>
+            </div>
+            <div class="channel-item">
+                <div class="channel-item-img" style="background-image:url('/Content/pcimage/15.jpg')"></div>
+                <div class="channel-item-content">
+                    <div class="title">【万佳地产招商】万佳地产招商</div>
+                    <div class="text">招商模式2.0，产业链（产业集群）招商，以搭建产业链、打造产业集群、提升产业竞争力为目标，是升级版招商，也是目前很多地方在实施。     </div>
+                    <div class="price">投资金额：10万-12万</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <div class="currentPage">1</div>
+            <div class="pageBtn">2</div>
+            <div class="pageBtn">3</div>
+            <div class="pageBtn">4</div>
+            <div class="pageBtn">下一页</div>
+            <div class="gotoPage">
+                到第
+                <input type="number" min="1" />
+                页
+            </div>
+            <button class="currentPage" type="button">
+                确定
+            </button>
+        </div>
+    </div>
