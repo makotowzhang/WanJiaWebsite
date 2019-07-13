@@ -203,11 +203,15 @@
     <Content Include="Content\Images\arrow-right-gray.png" />
     <Content Include="Content\Images\arrow-right-white.png" />
     <Content Include="Content\Images\arrow-up-white.png" />
+    <Content Include="Content\Images\location_757575.png" />
     <Content Include="Content\Images\login-img.png" />
     <Content Include="Content\Images\login_logo.png" />
     <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\mail_757575.png" />
+    <Content Include="Content\Images\mobile_757575.png" />
     <Content Include="Content\Images\star_CFCFCF.png" />
     <Content Include="Content\Images\star_E1C69C.png" />
+    <Content Include="Content\Images\tel_757575.png" />
     <Content Include="Content\pcimage\1.jpg" />
     <Content Include="Content\pcimage\10.jpg" />
     <Content Include="Content\pcimage\11.jpg" />
@@ -698,6 +702,8 @@
     <Content Include="Views\FontPage\BuildingStyle.cshtml" />
     <Content Include="Views\FontPage\BusinessChannel.cshtml" />
     <Content Include="Views\FontPage\RecruitmentTalents.cshtml" />
+    <Content Include="Views\FontPage\SunRecruitment.cshtml" />
+    <Content Include="Views\FontPage\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">

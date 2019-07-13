@@ -62,5 +62,19 @@ namespace WebSite.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// 阳光招采
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SunRecruitment()
+        {
+            return View();
+        }
+
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
     }
 }

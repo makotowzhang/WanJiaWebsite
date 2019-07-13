@@ -1,0 +1,284 @@
+﻿
+@{
+    ViewBag.Title = "阳光招采";
+    Layout = "~/Views/Shared/_FontPageLayout.cshtml";
+}
+
+@section css{
+    <style>
+        .body-content {
+            width: 100%;
+            height: 100%;
+        }
+
+        .top-img-box {
+            height: 500px;
+            background-image: url("/Content/pcimage/2.jpg");
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .top-img-box-modal {
+            background-color: rgba(0,0,0,0.3);
+            padding: 8px 25px;
+            height: 180px;
+            width: 600px;
+        }
+
+        .title-box {
+            border: 2px solid white;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+
+        .top-title {
+            font-size: 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .top-line {
+            margin: 0 100px;
+            height: 2px;
+            background: white;
+        }
+        /*标题*/
+        .commtitle {
+            margin-top: 100px;
+        }
+
+            .commtitle > div {
+                display: flex;
+                justify-content: center;
+            }
+
+            .commtitle > .cname {
+                display: flex;
+                align-items: center;
+            }
+
+                .commtitle > .cname > .line {
+                    height: 2px;
+                    background-color: rgba(102,102,102,0.4);
+                    width: 80px;
+                }
+
+                .commtitle > .cname > .text {
+                    font-size: 26px;
+                    color: rgba(51,51,51,1);
+                    margin: 0 30px;
+                }
+
+            .commtitle > .ename {
+                color: #999999;
+                font-size: 22px;
+                margin-top: 15px;
+            }
+
+        .building-classify {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .classify-item {
+            margin: 0 20px;
+            padding: 1px 5px;
+            border-radius: 2px;
+            color: #626262;
+            font-size: 20px;
+        }
+
+        .classify-sp {
+            width: 1px;
+            background-color: #626262;
+        }
+
+        .classify-item.current {
+            color: white;
+            background-color: #283263;
+        }
+        /*表格*/
+        .sungrid {
+            padding: 0 200px;
+            margin-top: 80px;
+        }
+
+            .sungrid table, tr {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+        .gridth {
+            background-color: #162F67;
+        }
+
+            .gridth > td {
+                background-color: #162F67;
+                color: white;
+                text-align: center;
+                font-size: 18px;
+                padding: 15px 0;
+            }
+
+        .gridtd > td {
+            text-align: center;
+            font-size: 18px;
+            padding: 30px 0;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+            .gridtd > td > button {
+                color:white;
+                background: rgba(22,47,103,1);
+                border-radius: 10px;
+                padding:10px 20px;
+                border:0;
+            }
+        /*分页*/
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 150px;
+            margin: 80px 0;
+            align-items: center;
+        }
+
+        .pageBtn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 18px;
+            border: 1px solid #D2D2D2;
+            border-radius: 5px;
+            color: #757575;
+            cursor: pointer;
+        }
+
+        .gotoPage {
+            margin: 0 20px;
+            font-size: 18px;
+        }
+
+            .gotoPage > input {
+                height: 30px;
+                width: 60px;
+                border-radius: 5px;
+                border: 1px solid #D2D2D2;
+                text-align: center;
+            }
+
+        .currentPage {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 18px;
+            border: 1px solid #162F67;
+            background-color: #162F67;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+}
+<div class="body-content">
+    <div class="top-img-box">
+        <div class="top-img-box-modal">
+            <div class="title-box">
+                <div class="top-title">
+                    阳光招采
+                </div>
+                <div class="top-line"></div>
+                <div class="top-title">
+                    万佳城市广场
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="commtitle">
+        <div class="cname">
+            <div class="line"></div>
+            <div class="text">招标信息</div>
+            <div class="line"></div>
+        </div>
+        <div class="ename">RECRUITMENT  TALENTS</div>
+    </div>
+    <div class="sungrid">
+        <table>
+            <tr class="gridth">
+                <td>项目名称</td>
+                <td>招标地点</td>
+                <td>招标时间</td>
+                <td>报名</td>
+            </tr>
+            <tr class="gridtd">
+                <td>万佳公司阳光招采</td>
+                <td>盐城市大丰区春柳路</td>
+                <td>2019/7/1-2019/7/21</td>
+                <td>
+                    <button type="button">立即报名</button>
+                </td>
+            </tr>
+            <tr class="gridtd">
+                <td>万佳公司阳光招采</td>
+                <td>盐城市大丰区春柳路</td>
+                <td>2019/7/1-2019/7/21</td>
+                <td>
+                    <button type="button">立即报名</button>
+                </td>
+            </tr>
+            <tr class="gridtd">
+                <td>万佳公司阳光招采</td>
+                <td>盐城市大丰区春柳路</td>
+                <td>2019/7/1-2019/7/21</td>
+                <td>
+                    <button type="button">立即报名</button>
+                </td>
+            </tr>
+            <tr class="gridtd">
+                <td>万佳公司阳光招采</td>
+                <td>盐城市大丰区春柳路</td>
+                <td>2019/7/1-2019/7/21</td>
+                <td>
+                    <button type="button">立即报名</button>
+                </td>
+            </tr>
+            <tr class="gridtd">
+                <td>万佳公司阳光招采</td>
+                <td>盐城市大丰区春柳路</td>
+                <td>2019/7/1-2019/7/21</td>
+                <td>
+                    <button type="button">立即报名</button>
+                </td>
+            </tr>
+            <tr class="gridtd">
+                <td>万佳公司阳光招采</td>
+                <td>盐城市大丰区春柳路</td>
+                <td>2019/7/1-2019/7/21</td>
+                <td>
+                    <button type="button">立即报名</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="pagination">
+        <div class="currentPage">1</div>
+        <div class="pageBtn">2</div>
+        <div class="pageBtn">3</div>
+        <div class="pageBtn">4</div>
+        <div class="pageBtn">下一页</div>
+        <div class="gotoPage">
+            到第
+            <input type="number" min="1" />
+            页
+        </div>
+        <button class="currentPage" type="button">
+            确定
+        </button>
+    </div>
+</div>

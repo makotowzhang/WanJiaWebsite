@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewBag.Title = "联系我们";
+    Layout = "~/Views/Shared/_FontPageLayout.cshtml";
+}
+@section css{
+    <style>
+        .body-content {
+            width: 100%;
+            height: 100%;
+        }
+
+        .top-img-box {
+            height: 500px;
+            background-image: url("/Content/pcimage/1.jpg");
+            background-size: cover;
+        }
+
+        .top-img-box-modal {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+        }
+
+            .top-img-box-modal > div {
+                width: 100%;
+            }
+
+                .top-img-box-modal > div > div {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    color: white;
+                }
+
+        .top-line {
+            height: 2px;
+            width: 150px;
+            background-color: rgba(255,255,255,0.5);
+        }
+        /*标题*/
+        .commtitle {
+            margin-top: 100px;
+        }
+
+            .commtitle > div {
+                display: flex;
+                justify-content: center;
+            }
+
+            .commtitle > .cname {
+                display: flex;
+                align-items: center;
+            }
+
+                .commtitle > .cname > .line {
+                    height: 2px;
+                    background-color: rgba(102,102,102,0.4);
+                    width: 80px;
+                }
+
+                .commtitle > .cname > .text {
+                    font-size: 26px;
+                    color: rgba(51,51,51,1);
+                    margin: 0 30px;
+                }
+
+            .commtitle > .ename {
+                color: #999999;
+                font-size: 22px;
+                margin-top: 15px;
+            }
+
+        /*联系方式*/
+        .contact-info {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+            .contact-info > div {
+            }
+
+            .contact-info > .left-box > .title {
+                color: rgba(22,47,103,1);
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+
+            .contact-info > .left-box > .text {
+                color: #757575;
+                font-size: 16px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+            }
+
+                .contact-info > .left-box > .text > img {
+                    width: 25px;
+                    margin-right: 10px;
+                }
+
+            .contact-info > .right-box {
+                margin-left: 80px;
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-start;
+                padding-bottom: 10px;
+            }
+        .map {
+        padding:0 200px;
+        margin-top:100px;
+        margin-bottom:100px;
+        }
+    </style>
+}
+
+@section js{
+    <script src="~/Scripts/JQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jN8uiyuCIKfV7CED3y4MiYFGmO8L4kcc"></script>
+    <script>
+        $(function () {
+            // 百度地图API功能
+            var map = new BMap.Map("allmap");    // 创建Map实例
+            map.centerAndZoom(new BMap.Point(120.492833, 33.211461), 20);  // 初始化地图,设置中心点坐标和地图级别
+            //添加地图类型控件
+            map.addControl(new BMap.MapTypeControl({
+                mapTypes: [
+                ]
+            }));
+            map.enableScrollWheelZoom();
+        });
+    </script>
+}
+<div class="body-content">
+    <div class="top-img-box">
+        <div class="top-img-box-modal">
+            <div>
+                <div>
+                    <span style="font-size:54px;">联系我们&nbsp;</span>
+                    <span style="font-size:36px;align-self:flex-end;font-style:italic">CONTACT</span>
+                </div>
+                <div style="margin-top:20px;">
+                    <div class="top-line"></div>
+                    <div style="margin:0 20px;font-size:20px;">若您有需要 &nbsp;我们随时在 </div>
+                    <div class="top-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="commtitle">
+        <div class="cname">
+            <div class="line"></div>
+            <div class="text">联系我们</div>
+            <div class="line"></div>
+        </div>
+        <div class="ename">CONTACT US</div>
+    </div>
+    <div class="contact-info">
+        <div class="left-box">
+            <div class="title">联系方式</div>
+            <div class="text"><img src="~/Content/Images/tel_757575.png" /> 400-9589788</div>
+
+            <div class="text">
+                <img src="~/Content/Images/mobile_757575.png" />
+                张经理  789900000000
+            </div>
+            <div class="text"><img src="~/Content/Images/mail_757575.png" /> wanjia@163.com</div>
+            <div class="text"><img src="~/Content/Images/location_757575.png" />盐城市大丰区春柳路6号</div>
+        </div>
+        <div class="right-box">
+            <div>
+                <div style="height:150px;width:150px;background-color:#162F67"></div>
+                <div style="margin-top:10px;text-align:center;color:rgba(51,51,51,1);font-size:18px">官方微博</div>
+            </div>
+            <div style="margin-left:100px;">
+                <div>
+                    <div style="height:150px;width:150px;background-color:#162F67"></div>
+                </div>
+                <div style="margin-top:10px;text-align:center;color:rgba(51,51,51,1);font-size:18px">官方公众号</div>
+            </div>
+        </div>
+    </div>
+    <div class="map">
+        <div id="allmap" style="height:400px;"></div>
+    </div>
+</div>
