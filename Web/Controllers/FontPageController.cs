@@ -72,6 +72,10 @@ namespace WebSite.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 联系我们
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ContactUs()
         {
             return View();
