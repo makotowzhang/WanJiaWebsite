@@ -1,0 +1,51 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Css/MobilePage.css" rel="stylesheet" />
+    <link href="~/Content/Css/normalize.css" rel="stylesheet" />
+    @RenderSection("css", false)
+    @RenderSection("js", false)
+</head>
+<body>
+    <div class="index-head-menu">
+        <div class="index-head-menu-img">
+            <img src="https://dummyimage.com/100x100" />
+        </div>
+        <div class="index-head-menu-text">
+            <div class="cn">万佳城市广场</div>
+            <div class="en">WANJIACHENGSHIGUANGCHENG</div>
+        </div>
+        <div class="index-head-menu-list">
+            <div>首页</div>
+            <div>
+                企业概况
+                <div class="index-head-list-hidemenu">
+                    <div>企业简介</div>
+                    <div>董事长致辞</div>
+                    <div>发展规划</div>
+                    <div>企业文化</div>
+                    <div>组织机构</div>
+                    <div>企业荣誉</div>
+                </div>
+            </div>
+            <div>新闻中心</div>
+            <div>楼盘风采</div>
+            <div>营销网络</div>
+            <div>信息反馈</div>
+            <div>阳光采招</div>
+            <div>联系我们</div>
+        </div>
+
+    </div>
+    <div class="index-content">
+        @RenderBody()
+    </div>
+</body>
+</html>

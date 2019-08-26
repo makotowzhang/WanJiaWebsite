@@ -171,6 +171,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\MobilePageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SysMessageController.cs" />
     <Compile Include="Controllers\SystemLogController.cs" />
@@ -185,6 +186,7 @@
     <Content Include="Content\CommonStyle.css" />
     <Content Include="Content\Css\FrontPage.css" />
     <Content Include="Content\Css\login.css" />
+    <Content Include="Content\Css\MobilePage.css" />
     <Content Include="Content\Css\normalize.css" />
     <Content Include="Content\fileicon\demo.css" />
     <Content Include="Content\fileicon\demo_fontclass.html" />
@@ -704,6 +706,8 @@
     <Content Include="Views\FontPage\RecruitmentTalents.cshtml" />
     <Content Include="Views\FontPage\SunRecruitment.cshtml" />
     <Content Include="Views\FontPage\ContactUs.cshtml" />
+    <Content Include="Views\MobilePage\Index.cshtml" />
+    <Content Include="Views\Shared\_MobilePageLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">
