@@ -144,6 +144,70 @@
           <Property Name="UpdateUser" Type="uniqueidentifier" />
           <Property Name="UpdateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="WJ_Building">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ShortRemark" Type="varchar" MaxLength="500" />
+          <Property Name="ContactTel" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="500" />
+          <Property Name="BuildName" Type="varchar" MaxLength="100" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="StarsCount" Type="int" />
+          <Property Name="BuildIntro" Type="varchar" MaxLength="500" />
+          <Property Name="OpeningTime" Type="datetime" />
+          <Property Name="BuildPrice" Type="varchar" MaxLength="50" />
+          <Property Name="BuildType" Type="uniqueidentifier" />
+          <Property Name="Households" Type="int" />
+          <Property Name="BelogEstate" Type="varchar" MaxLength="50" />
+          <Property Name="Years" Type="int" />
+          <Property Name="SalesAddress" Type="varchar" MaxLength="500" />
+          <Property Name="AreaCovered" Type="varchar" MaxLength="50" />
+          <Property Name="BuildingCount" Type="int" />
+          <Property Name="RenovationCondition" Type="varchar" MaxLength="50" />
+          <Property Name="GreeningRate" Type="varchar" MaxLength="50" />
+          <Property Name="IsDel" Type="bit" Nullable="false" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="UpdateUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WJ_BuildingAttr">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuildingId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AttrType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DicId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WJ_BuildingPhoto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuildingId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PhotoType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhotoPath" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WJ_Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CusName" Type="varchar" MaxLength="50" />
+          <Property Name="CusPwd" Type="varchar" MaxLength="50" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="50" />
+          <Property Name="RegTime" Type="datetime" />
+          <Property Name="RegEmail" Type="varchar" MaxLength="50" />
+          <Property Name="LastLoginTime" Type="datetime" />
+          <Property Name="IsDel" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdateUser" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityContainer Name="FrameworkModelStoreContainer">
           <EntitySet Name="System_Authorize" EntityType="Self.System_Authorize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="System_DicGroup" EntityType="Self.System_DicGroup" Schema="dbo" store:Type="Tables" />
@@ -155,6 +219,10 @@
           <EntitySet Name="System_Role" EntityType="Self.System_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="System_User" EntityType="Self.System_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="System_UserRole" EntityType="Self.System_UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WJ_Building" EntityType="Self.WJ_Building" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WJ_BuildingAttr" EntityType="Self.WJ_BuildingAttr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WJ_BuildingPhoto" EntityType="Self.WJ_BuildingPhoto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WJ_Customer" EntityType="Self.WJ_Customer" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -171,6 +239,10 @@
           <EntitySet Name="System_Role" EntityType="Entity.System_Role" />
           <EntitySet Name="System_User" EntityType="Entity.System_User" />
           <EntitySet Name="System_UserRole" EntityType="Entity.System_UserRole" />
+          <EntitySet Name="WJ_Building" EntityType="Entity.WJ_Building" />
+          <EntitySet Name="WJ_BuildingAttr" EntityType="Entity.WJ_BuildingAttr" />
+          <EntitySet Name="WJ_BuildingPhoto" EntityType="Entity.WJ_BuildingPhoto" />
+          <EntitySet Name="WJ_Customer" EntityType="Entity.WJ_Customer" />
         </EntityContainer>
         <EntityType Name="System_Authorize">
           <Key>
@@ -310,6 +382,70 @@
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="UpdateUser" Type="Guid" />
           <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WJ_Building">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ShortRemark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactTel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BuildName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="StarsCount" Type="Int32" />
+          <Property Name="BuildIntro" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OpeningTime" Type="DateTime" Precision="3" />
+          <Property Name="BuildPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BuildType" Type="Guid" />
+          <Property Name="Households" Type="Int32" />
+          <Property Name="BelogEstate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Years" Type="Int32" />
+          <Property Name="SalesAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="AreaCovered" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingCount" Type="Int32" />
+          <Property Name="RenovationCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GreeningRate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDel" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WJ_BuildingAttr">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuildingId" Type="Guid" Nullable="false" />
+          <Property Name="AttrType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DicId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WJ_BuildingPhoto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuildingId" Type="Guid" Nullable="false" />
+          <Property Name="PhotoType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhotoPath" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WJ_Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CusPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegTime" Type="DateTime" Precision="3" />
+          <Property Name="RegEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDel" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -462,6 +598,74 @@
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_Building">
+            <EntityTypeMapping TypeName="Entity.WJ_Building">
+              <MappingFragment StoreEntitySet="WJ_Building">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="GreeningRate" ColumnName="GreeningRate" />
+                <ScalarProperty Name="RenovationCondition" ColumnName="RenovationCondition" />
+                <ScalarProperty Name="BuildingCount" ColumnName="BuildingCount" />
+                <ScalarProperty Name="AreaCovered" ColumnName="AreaCovered" />
+                <ScalarProperty Name="SalesAddress" ColumnName="SalesAddress" />
+                <ScalarProperty Name="Years" ColumnName="Years" />
+                <ScalarProperty Name="BelogEstate" ColumnName="BelogEstate" />
+                <ScalarProperty Name="Households" ColumnName="Households" />
+                <ScalarProperty Name="BuildType" ColumnName="BuildType" />
+                <ScalarProperty Name="BuildPrice" ColumnName="BuildPrice" />
+                <ScalarProperty Name="OpeningTime" ColumnName="OpeningTime" />
+                <ScalarProperty Name="BuildIntro" ColumnName="BuildIntro" />
+                <ScalarProperty Name="StarsCount" ColumnName="StarsCount" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="BuildName" ColumnName="BuildName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
+                <ScalarProperty Name="ShortRemark" ColumnName="ShortRemark" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_BuildingAttr">
+            <EntityTypeMapping TypeName="Entity.WJ_BuildingAttr">
+              <MappingFragment StoreEntitySet="WJ_BuildingAttr">
+                <ScalarProperty Name="DicId" ColumnName="DicId" />
+                <ScalarProperty Name="AttrType" ColumnName="AttrType" />
+                <ScalarProperty Name="BuildingId" ColumnName="BuildingId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_BuildingPhoto">
+            <EntityTypeMapping TypeName="Entity.WJ_BuildingPhoto">
+              <MappingFragment StoreEntitySet="WJ_BuildingPhoto">
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="PhotoType" ColumnName="PhotoType" />
+                <ScalarProperty Name="BuildingId" ColumnName="BuildingId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_Customer">
+            <EntityTypeMapping TypeName="Entity.WJ_Customer">
+              <MappingFragment StoreEntitySet="WJ_Customer">
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
+                <ScalarProperty Name="RegEmail" ColumnName="RegEmail" />
+                <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="CusPwd" ColumnName="CusPwd" />
+                <ScalarProperty Name="CusName" ColumnName="CusName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

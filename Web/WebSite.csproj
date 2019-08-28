@@ -176,6 +176,7 @@
     <Compile Include="Controllers\SysMessageController.cs" />
     <Compile Include="Controllers\SystemLogController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WebManageController.cs" />
     <Compile Include="Controllers\WelcomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -708,6 +709,7 @@
     <Content Include="Views\FontPage\ContactUs.cshtml" />
     <Content Include="Views\MobilePage\Index.cshtml" />
     <Content Include="Views\Shared\_MobilePageLayout.cshtml" />
+    <Content Include="Views\WebManage\BuildingManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">
