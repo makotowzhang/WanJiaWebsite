@@ -82,6 +82,24 @@ namespace WebSite.Controllers
             return File(file, "application/octet-stream", fileName);
         }
 
+        public ActionResult UploadImg()
+        {
+            if (Request.Files.Count == 0)
+            {
+                return Content("");
+            }
+            var img = Request.Files[0];
+            var ext = Path.GetExtension(img.FileName);
+            var tempPath = "/Upload/temp";
+            if (!Directory.Exists(Server.MapPath($"~{tempPath}")))
+            {
+                Directory.CreateDirectory(Server.MapPath($"~{tempPath}"));
+            }
+            var savePath = tempPath + "/" + Guid.NewGuid() + ext;
+            img.SaveAs(Server.MapPath($"~{savePath}"));
+            return Content(savePath);
+        }
+
         public EnumJsonResult EnumJson(object data)
         {
             EnumJsonResult result = new EnumJsonResult();

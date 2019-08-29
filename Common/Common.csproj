@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="FileHelper.cs" />
     <Compile Include="HttpContextHelp.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="MD5Encrypt.cs" />

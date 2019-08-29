@@ -11,6 +11,9 @@
     <title>楼盘管理</title>
     @Html.Partial("~/Views/Shared/_Head.cshtml")
     <style>
+        .disabled .el-upload--picture-card {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -77,10 +80,11 @@
             </div>
             <el-dialog :close-on-click-modal="false" :title="modifyTitle"
                        :visible.sync="Dialog.addDialog"
-                       width="500px">
-                <el-form :model="AddFormData" :rules="AddFormRule" label-width="80px" ref="AddForm" @@submit.native.prevent>
+                       width="60%"
+                       top="20px">
+                <el-form :model="AddFormData"  :rules="AddFormRule" label-width="80px" ref="AddForm" @@submit.native.prevent>
                     <el-tabs v-model="TabName">
-                        <el-tab-pane name="1" label="基本信息">
+                        <el-tab-pane name="1" label="基本信息"  :style="{height:panelHeight+'px',overflow:'auto',paddingRight:'10px'}">
                             <el-form-item label="楼盘名称" prop="BuildName">
                                 <el-input v-model="AddFormData.BuildName" :readonly="Dialog.IsDetail" placeholder="请输入楼盘名称"></el-input>
                             </el-form-item>
@@ -91,9 +95,9 @@
                                            multiple
                                            collapse-tags>
                                     <el-option v-for="item in SelectOption.BuildType"
-                                               :key="item.Value"
-                                               :label="item.Text"
-                                               :value="item.Value">
+                                               :key="item.Id"
+                                               :label="item.ItemDesc"
+                                               :value="item.Id">
                                     </el-option>
                                 </el-select>
                             </el-form-item>
@@ -104,9 +108,9 @@
                                            multiple
                                            collapse-tags>
                                     <el-option v-for="item in SelectOption.BuildTag"
-                                               :key="item.Value"
-                                               :label="item.Text"
-                                               :value="item.Value">
+                                               :key="item.Id"
+                                               :label="item.ItemDesc"
+                                               :value="item.Id">
                                     </el-option>
                                 </el-select>
                             </el-form-item>
@@ -120,10 +124,10 @@
                                 <el-input v-model="AddFormData.ShortRemark" :readonly="Dialog.IsDetail" placeholder="请输入备注"></el-input>
                             </el-form-item>
                             <el-form-item label="排序" prop="Sort">
-                                <el-input-number v-model="AddFormData.Sort" :readonly="Dialog.IsDetail"></el-input-number>
+                                <el-input-number v-model="AddFormData.Sort" :min="0"  :precision="0" :readonly="Dialog.IsDetail"></el-input-number>
                             </el-form-item>
-                            <el-form-item label="StarsCount" prop="Sort">
-                                <el-input-number v-model="AddFormData.StarsCount" :min="0" :max="5" :readonly="Dialog.IsDetail"></el-input-number>
+                            <el-form-item label="星级" prop="Sort">
+                                <el-input-number v-model="AddFormData.StarsCount" :min="0" :precision="0"  :max="5" :readonly="Dialog.IsDetail"></el-input-number>
                             </el-form-item>
                             <el-form-item label="开盘时间" prop="OpeningTime">
                                 <el-date-picker v-model="AddFormData.OpeningTime"
@@ -137,12 +141,25 @@
                                 <el-input v-model="AddFormData.BuildPrice" :readonly="Dialog.IsDetail" placeholder="请输入价格"></el-input>
                             </el-form-item>
                         </el-tab-pane>
-                        <el-tab-pane name="2" label="详细信息">
+                        <el-tab-pane name="2" label="详细信息" :style="{height:panelHeight+'px',overflow:'auto',paddingRight:'10px'}">
+                            <el-form-item label="物业类型" prop="BuildPropertyTypeLsit">
+                                <el-select v-model="AddFormData.BuildPropertyTypeLsit"
+                                           placeholder="请选择物业类型"
+                                           :clearable="true"
+                                           multiple
+                                           collapse-tags>
+                                    <el-option v-for="item in SelectOption.BuildTag"
+                                               :key="item.Id"
+                                               :label="item.ItemDesc"
+                                               :value="item.Id">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
                             <el-form-item label="规划户数" prop="Households">
-                                <el-input v-model="AddFormData.Households" :readonly="Dialog.IsDetail" placeholder="请输入规划户数"></el-input>
+                                <el-input-number v-model="AddFormData.Households" :min="0" :precision="0" :readonly="Dialog.IsDetail" placeholder="请输入规划户数"></el-input-number>
                             </el-form-item>
                             <el-form-item label="年限" prop="Years">
-                                <el-input-number v-model="AddFormData.Years" :readonly="Dialog.IsDetail" placeholder="请输入年限"></el-input-number>
+                                <el-input-number v-model="AddFormData.Years" :min="0" :precision="0" :readonly="Dialog.IsDetail" placeholder="请输入年限"></el-input-number>
                             </el-form-item>
                             <el-form-item label="售楼地址" prop="SalesAddress">
                                 <el-input v-model="AddFormData.SalesAddress" :readonly="Dialog.IsDetail" placeholder="请输入售楼地址"></el-input>
@@ -151,7 +168,7 @@
                                 <el-input v-model="AddFormData.AreaCovered" :readonly="Dialog.IsDetail" placeholder="请输入占地面积"></el-input>
                             </el-form-item>
                             <el-form-item label="楼栋总数" prop="BuildingCount">
-                                <el-input-number v-model="AddFormData.BuildingCount" :readonly="Dialog.IsDetail" placeholder="请输入楼栋总数"></el-input-number>
+                                <el-input-number v-model="AddFormData.BuildingCount" :min="0" :precision="0" :readonly="Dialog.IsDetail" placeholder="请输入楼栋总数"></el-input-number>
                             </el-form-item>
                             <el-form-item label="装修情况" prop="RenovationCondition">
                                 <el-input v-model="AddFormData.RenovationCondition" :readonly="Dialog.IsDetail" placeholder="请输入装修情况"></el-input>
@@ -160,10 +177,33 @@
                                 <el-input v-model="AddFormData.GreeningRate" :readonly="Dialog.IsDetail" placeholder="请输入绿化率"></el-input>
                             </el-form-item>
                         </el-tab-pane>
-                        <el-tab-pane name="3" label="照片信息">
+                        <el-tab-pane name="3" label="照片信息" :style="{height:panelHeight+'px',overflow:'auto',paddingRight:'10px'}">
                             <el-form-item label="列表图片" prop="BuildShowImage">
-                                <el-upload action="UploadImg"
+                                <el-upload :class="{disabled:AddFormData.BuildShowImage.length>=1}"
+                                           action="UploadImg"
                                            :on-success="uploadImgSuccess"
+                                           :on-remove="removeImg"
+                                           :limit="1"
+                                           list-type="picture-card">
+                                    <i class="el-icon-plus"></i>
+                                </el-upload>
+                            </el-form-item>
+                            <el-form-item label="外观图片" prop="BuildAlbumList">
+                                <el-upload :class="{disabled:AddFormData.BuildAlbumList.length>=5}"
+                                           action="UploadImg"
+                                           :on-success="uploadAlbumSuccess"
+                                           :on-remove="removeAlbum"
+                                           :limit="5"
+                                           list-type="picture-card">
+                                    <i class="el-icon-plus"></i>
+                                </el-upload>
+                            </el-form-item>
+                            <el-form-item label="户型图片" prop="BuildHouseTypeList">
+                                <el-upload :class="{disabled:AddFormData.BuildHouseTypeList.length>=5}"
+                                           action="UploadImg"
+                                           :on-success="uploadHouseTypeSuccess"
+                                           :on-remove="removeHouseType"
+                                           :limit="5"
                                            list-type="picture-card">
                                     <i class="el-icon-plus"></i>
                                 </el-upload>
@@ -243,15 +283,17 @@
             },
             SelectOption: {
                 BuildType: [],
-                BuildTag:[]
+                BuildTag: [],
+                BuildPropertyType:[]
             },
             ActionPermission: {
-                Add: true,
+                Add: false,
                 Edit: false,
                 Delete: false
             },
             modifyTitle: "",
-            TabName: "1"
+            TabName: "1",
+            panelHeight: 250
         },
         methods: {
             onQuery: function () {
@@ -266,14 +308,14 @@
                 this.$refs.QueryForm.resetFields();
             },
             openAddDialog: function () {
-                this.modifyTitle = "新增部门";
+                this.modifyTitle = "新增楼盘";
                 $vue.AddFormData.Id = null;
                 $vue.AddFormData.DepName = "";
                 this.Dialog.addDialog = true;
                 setTimeout($vue.$refs.AddForm.clearValidate, 0);
             },
             openEditDialog: function () {
-                this.modifyTitle = "编辑部门";
+                this.modifyTitle = "编辑楼盘";
                 axios.post("GetDepModel", { id: this.$refs.dataTable.selection[0].Id }).then(function (response) {
                     $vue.AddFormData = response.data;
                     $vue.Dialog.addDialog = true;
@@ -354,11 +396,49 @@
                 done();
             },
             uploadImgSuccess: function (response, file, fileList) {
-                debugger;
+                file.url = response;
+                this.AddFormData.BuildShowImage = [file.url];
+            },
+            removeImg: function (file, fileList) {
+                this.AddFormData.BuildShowImage = "";
+            },
+            uploadAlbumSuccess(response, file, fileList) {
+                file.url = response;
+                this.AddFormData.BuildAlbumList.push(response);
+            },
+            removeAlbum(file, fileList) {
+                this.AddFormData.BuildAlbumList.splice(this.AddFormData.BuildAlbumList.indexOf(file.url), 1);
+            },
+            uploadHouseTypeSuccess(response, file, fileList) {
+                file.url = response;
+                this.AddFormData.BuildHouseTypeList.push(response);
+            },
+            removeHouseType(file, fileList) {
+                this.AddFormData.BuildHouseTypeList.splice(this.AddFormData.BuildHouseTypeList.indexOf(file.url), 1);
             },
             DateFormat: DateFormat
+        },
+        created: function () {
+            var that = this;
+            axios.post("/Dictionary/GetGroupItemList", { groupCode: "BuildPropertyType" }).then(function (response) {
+                that.SelectOption.BuildPropertyType = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+            axios.post("/Dictionary/GetGroupItemList", { groupCode: "BuildingType" }).then(function (response) {
+                that.SelectOption.BuildType = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+            axios.post("/Dictionary/GetGroupItemList", { groupCode: "BuildingTag" }).then(function (response) {
+                that.SelectOption.BuildTag = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        mounted: function () {
+            this.panelHeight = this.$refs.App.getBoundingClientRect().height - 310;
         }
-
     });
 
     function getList(filter) {
@@ -383,10 +463,6 @@
             });
         });
     }
-
-
-
-
 
     window.onresize = function () {
         $vue.tableHeight = $vue.$refs.App.getBoundingClientRect().height -

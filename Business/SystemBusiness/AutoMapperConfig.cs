@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Entity;
 using Model.SystemModel;
+using Model;
 
 
 namespace Business.SystemBusiness
@@ -31,6 +32,9 @@ namespace Business.SystemBusiness
 
                 m.CreateMap<DicItemModel, System_DicItem>();
                 m.CreateMap<System_DicItem, DicItemModel>();
+
+                m.CreateMap<WJ_Building, WJ_BuildingModel>();
+                m.CreateMap<WJ_BuildingModel, WJ_Building>();
 
             });
         }
