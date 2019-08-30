@@ -35,9 +35,9 @@ namespace Entity
         public virtual DbSet<System_Role> System_Role { get; set; }
         public virtual DbSet<System_User> System_User { get; set; }
         public virtual DbSet<System_UserRole> System_UserRole { get; set; }
-        public virtual DbSet<WJ_Building> WJ_Building { get; set; }
         public virtual DbSet<WJ_BuildingAttr> WJ_BuildingAttr { get; set; }
         public virtual DbSet<WJ_BuildingPhoto> WJ_BuildingPhoto { get; set; }
         public virtual DbSet<WJ_Customer> WJ_Customer { get; set; }
+        public virtual DbSet<WJ_Building> WJ_Building { get; set; }
     }
 }

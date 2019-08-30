@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.SystemModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,17 +29,30 @@ namespace Model
         public string RenovationCondition { get; set; }
         public string GreeningRate { get; set; }
         public bool IsDel { get; set; }
-        public string CreateUser { get; set; }
+        public Guid CreateUser { get; set; }
         public DateTime? CreateTime { get; set; }
-        public string UpdateUser { get; set; }
+        public Guid? UpdateUser { get; set; }
         public DateTime? UpdateTime { get; set; }
 
         public List<Guid> BuildTypeList { get; set; } = new List<Guid>();
-
         public List<Guid> BuildTagList { get; set; } = new List<Guid>();
         public List<Guid> BuildPropertyTypeLsit { get; set; } = new List<Guid>();
+
+        public List<string> BuildTypeListText { get; set; } = new List<string>();
+        public List<string> BuildTagListText { get; set; } = new List<string>();
+        public List<string> BuildPropertyTypeLsitText { get; set; } = new List<string>();
+
         public List<string> BuildShowImage { get; set; } = new List<string>();
         public List<string> BuildAlbumList { get; set; } = new List<string>();
         public List<string> BuildHouseTypeList { get; set; } = new List<string>();
+    }
+
+    public class WJ_BuildingFilter : PageModel
+    {
+        public string BuildingName { get; set; }
+
+        public List<Guid> BuildingType { get; set; }
+
+        public List<Guid> BuildingTag { get; set; }
     }
 }

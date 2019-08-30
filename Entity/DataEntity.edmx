@@ -168,9 +168,9 @@
           <Property Name="RenovationCondition" Type="varchar" MaxLength="50" />
           <Property Name="GreeningRate" Type="varchar" MaxLength="50" />
           <Property Name="IsDel" Type="bit" Nullable="false" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="UpdateUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdateUser" Type="uniqueidentifier" />
           <Property Name="UpdateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="WJ_BuildingAttr">
@@ -239,10 +239,10 @@
           <EntitySet Name="System_Role" EntityType="Entity.System_Role" />
           <EntitySet Name="System_User" EntityType="Entity.System_User" />
           <EntitySet Name="System_UserRole" EntityType="Entity.System_UserRole" />
-          <EntitySet Name="WJ_Building" EntityType="Entity.WJ_Building" />
           <EntitySet Name="WJ_BuildingAttr" EntityType="Entity.WJ_BuildingAttr" />
           <EntitySet Name="WJ_BuildingPhoto" EntityType="Entity.WJ_BuildingPhoto" />
           <EntitySet Name="WJ_Customer" EntityType="Entity.WJ_Customer" />
+          <EntitySet Name="WJ_Building" EntityType="Entity.WJ_Building" />
         </EntityContainer>
         <EntityType Name="System_Authorize">
           <Key>
@@ -383,35 +383,6 @@
           <Property Name="UpdateUser" Type="Guid" />
           <Property Name="UpdateTime" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="WJ_Building">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ShortRemark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ContactTel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="BuildName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Sort" Type="Int32" />
-          <Property Name="StarsCount" Type="Int32" />
-          <Property Name="BuildIntro" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="OpeningTime" Type="DateTime" Precision="3" />
-          <Property Name="BuildPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BuildType" Type="Guid" />
-          <Property Name="Households" Type="Int32" />
-          <Property Name="BelogEstate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Years" Type="Int32" />
-          <Property Name="SalesAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="AreaCovered" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BuildingCount" Type="Int32" />
-          <Property Name="RenovationCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="GreeningRate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsDel" Type="Boolean" Nullable="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="WJ_BuildingAttr">
           <Key>
             <PropertyRef Name="Id" />
@@ -446,6 +417,35 @@
           <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdateTime" Type="DateTime" Precision="3" />
           <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WJ_Building">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ShortRemark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactTel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BuildName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="StarsCount" Type="Int32" />
+          <Property Name="BuildIntro" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OpeningTime" Type="DateTime" Precision="3" />
+          <Property Name="BuildPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BuildType" Type="Guid" />
+          <Property Name="Households" Type="Int32" />
+          <Property Name="BelogEstate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Years" Type="Int32" />
+          <Property Name="SalesAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="AreaCovered" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingCount" Type="Int32" />
+          <Property Name="RenovationCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GreeningRate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDel" Type="Boolean" Nullable="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateUser" Type="Guid" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -602,36 +602,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="WJ_Building">
-            <EntityTypeMapping TypeName="Entity.WJ_Building">
-              <MappingFragment StoreEntitySet="WJ_Building">
-                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
-                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
-                <ScalarProperty Name="GreeningRate" ColumnName="GreeningRate" />
-                <ScalarProperty Name="RenovationCondition" ColumnName="RenovationCondition" />
-                <ScalarProperty Name="BuildingCount" ColumnName="BuildingCount" />
-                <ScalarProperty Name="AreaCovered" ColumnName="AreaCovered" />
-                <ScalarProperty Name="SalesAddress" ColumnName="SalesAddress" />
-                <ScalarProperty Name="Years" ColumnName="Years" />
-                <ScalarProperty Name="BelogEstate" ColumnName="BelogEstate" />
-                <ScalarProperty Name="Households" ColumnName="Households" />
-                <ScalarProperty Name="BuildType" ColumnName="BuildType" />
-                <ScalarProperty Name="BuildPrice" ColumnName="BuildPrice" />
-                <ScalarProperty Name="OpeningTime" ColumnName="OpeningTime" />
-                <ScalarProperty Name="BuildIntro" ColumnName="BuildIntro" />
-                <ScalarProperty Name="StarsCount" ColumnName="StarsCount" />
-                <ScalarProperty Name="Sort" ColumnName="Sort" />
-                <ScalarProperty Name="BuildName" ColumnName="BuildName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
-                <ScalarProperty Name="ShortRemark" ColumnName="ShortRemark" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="WJ_BuildingAttr">
             <EntityTypeMapping TypeName="Entity.WJ_BuildingAttr">
               <MappingFragment StoreEntitySet="WJ_BuildingAttr">
@@ -666,6 +636,36 @@
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="CusPwd" ColumnName="CusPwd" />
                 <ScalarProperty Name="CusName" ColumnName="CusName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_Building">
+            <EntityTypeMapping TypeName="Entity.WJ_Building">
+              <MappingFragment StoreEntitySet="WJ_Building">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="GreeningRate" ColumnName="GreeningRate" />
+                <ScalarProperty Name="RenovationCondition" ColumnName="RenovationCondition" />
+                <ScalarProperty Name="BuildingCount" ColumnName="BuildingCount" />
+                <ScalarProperty Name="AreaCovered" ColumnName="AreaCovered" />
+                <ScalarProperty Name="SalesAddress" ColumnName="SalesAddress" />
+                <ScalarProperty Name="Years" ColumnName="Years" />
+                <ScalarProperty Name="BelogEstate" ColumnName="BelogEstate" />
+                <ScalarProperty Name="Households" ColumnName="Households" />
+                <ScalarProperty Name="BuildType" ColumnName="BuildType" />
+                <ScalarProperty Name="BuildPrice" ColumnName="BuildPrice" />
+                <ScalarProperty Name="OpeningTime" ColumnName="OpeningTime" />
+                <ScalarProperty Name="BuildIntro" ColumnName="BuildIntro" />
+                <ScalarProperty Name="StarsCount" ColumnName="StarsCount" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="BuildName" ColumnName="BuildName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
+                <ScalarProperty Name="ShortRemark" ColumnName="ShortRemark" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -34,9 +34,9 @@ namespace Entity
         public string RenovationCondition { get; set; }
         public string GreeningRate { get; set; }
         public bool IsDel { get; set; }
-        public string CreateUser { get; set; }
+        public Nullable<System.Guid> CreateUser { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string UpdateUser { get; set; }
+        public Nullable<System.Guid> UpdateUser { get; set; }
         public Nullable<System.DateTime> UpdateTime { get; set; }
     }
 }

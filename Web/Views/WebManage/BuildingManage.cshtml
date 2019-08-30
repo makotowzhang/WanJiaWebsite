@@ -21,13 +21,51 @@
         <template>
             <div ref="QueryFormDiv">
                 <el-form :model="QueryFormData" :inline="true" class="Query_Form" ref="QueryForm" @@submit.native.prevent>
-                    <el-form-item label="部门名称" prop="DepName">
-                        <el-input v-model="QueryFormData.DepName" placeholder="请输入部门名称"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @@click="onQuery" icon="el-icon-search">查询</el-button>
-                        <el-button type="primary" @@click="resetQueryForm" icon="el-icon-refresh">重置</el-button>
-                    </el-form-item>
+                    <el-row>
+                        <el-col :span="6">
+                            <el-form-item label="楼盘名称" prop="BuildingName">
+                                <el-input v-model="QueryFormData.BuildingName" placeholder="楼盘名称"></el-input>
+                            </el-form-item>
+                            <el-form-item label="楼盘类型" prop="BuildingType">
+                                <el-select v-model="QueryFormData.BuildingType"
+                                           placeholder="请选择楼盘类型"
+                                           :clearable="true"
+                                           multiple
+                                           collapse-tags>
+                                    <el-option v-for="item in SelectOption.BuildType"
+                                               :key="item.Id"
+                                               :label="item.ItemDesc"
+                                               :value="item.Id">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="楼盘标签" prop="BuildingTag">
+                                <el-select v-model="QueryFormData.BuildingTag"
+                                           placeholder="请选择楼盘标签"
+                                           :clearable="true"
+                                           multiple
+                                           collapse-tags>
+                                    <el-option v-for="item in SelectOption.BuildTag"
+                                               :key="item.Id"
+                                               :label="item.ItemDesc"
+                                               :value="item.Id">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
+
+                        </el-col>
+                        <el-col :span="6">
+                        </el-col>
+                        <el-col :span="6">
+                            <el-form-item>
+                                <el-button type="primary" @@click="onQuery" icon="el-icon-search">查询</el-button>
+                                <el-button type="primary" @@click="resetQueryForm" icon="el-icon-refresh">重置</el-button>
+                            </el-form-item>
+                        </el-col>
+                       
+                    </el-row>
                 </el-form>
                 <el-row class="Table_Button_Row">
                     <el-col :span="24">
@@ -55,9 +93,37 @@
                 <el-table-column type="selection"
                                  width="50">
                 </el-table-column>
-                <el-table-column prop="DepName"
-                                 label="名称"
-                                 width="250">
+                <el-table-column prop="BuildName"
+                                 label="楼盘名称"
+                                 width="200">
+                </el-table-column>
+
+                <el-table-column prop="ShortRemark"
+                                 label="备注"
+                                 width="200">
+                </el-table-column>
+
+                <el-table-column prop="ContactTel"
+                                 label="联系电话"
+                                 width="100">
+                </el-table-column>
+                <el-table-column prop="Address"
+                                 label="地址"
+                                 width="200">
+                </el-table-column>
+                <el-table-column prop="BuildTypeListText"
+                                 label="楼盘类型"
+                                 width="300">
+                    <template slot-scope="scope">
+                        <el-tag style="margin-left:10px;" v-for="(v,i) in scope.row.BuildTypeListText" :key="i">{{v}}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="BuildTagListText"
+                                 label="楼盘标签"
+                                 width="300">
+                    <template slot-scope="scope">
+                        <el-tag style="margin-left:10px;" v-for="(v,i) in scope.row.BuildTagListText" :key="i">{{v}}</el-tag>
+                    </template>
                 </el-table-column>
                 <el-table-column prop="CreateTime"
                                  label="创建时间"
@@ -126,7 +192,7 @@
                             <el-form-item label="排序" prop="Sort">
                                 <el-input-number v-model="AddFormData.Sort" :min="0"  :precision="0" :readonly="Dialog.IsDetail"></el-input-number>
                             </el-form-item>
-                            <el-form-item label="星级" prop="Sort">
+                            <el-form-item label="星级" prop="StarsCount">
                                 <el-input-number v-model="AddFormData.StarsCount" :min="0" :precision="0"  :max="5" :readonly="Dialog.IsDetail"></el-input-number>
                             </el-form-item>
                             <el-form-item label="开盘时间" prop="OpeningTime">
@@ -225,7 +291,9 @@
         el: "#App",
         data: {
             QueryFormData: {
-                DepName: "",
+                BuildingName: "",
+                BuildingType: [],
+                BuildingTag:[],
                 Page: 1,
                 PageSize: 10,
             },
@@ -266,9 +334,32 @@
                 BuildHouseTypeList: []
             },
             AddFormRule: {
-                DepName: [
-                    { required: true, message: '请输入用户名', trigger: 'change' },
+                BuildName: [
+                    { required: true, message: '请输入楼盘名称', trigger: 'change' },
                     { max: 25, message: '长度不能超过25个字符', trigger: 'change' }
+                ],
+                ShortRemark: [
+                    { required: true, message: '请输入备注', trigger: 'change' },
+                    { max: 25, message: '长度不能超过25个字符', trigger: 'change' }
+                ],
+                BuildTypeList: [
+                    { required: true, message: '请选择楼盘类型', trigger: 'change' }
+                ],
+                BuildTagList: [
+                    { required: true, message: '请选择楼盘标签', trigger: 'change' }
+                ],
+                ContactTel: [
+                    { required: true, message: '请输入联系电话', trigger: 'change' },
+                    { max: 25, message: '长度不能超过25个字符', trigger: 'change' }
+                ],
+                StarsCount: [
+                    { required: true, message: '请输入星级', trigger: 'change' }
+                ],
+                OpeningTime: [
+                    { required: true, message: '请输入开盘时间', trigger: 'change' }
+                ],
+                BuildPrice: [
+                    { required: true, message: '请输入价格', trigger: 'change' }
                 ]
             },
             Loading: {
@@ -310,13 +401,12 @@
             openAddDialog: function () {
                 this.modifyTitle = "新增楼盘";
                 $vue.AddFormData.Id = null;
-                $vue.AddFormData.DepName = "";
                 this.Dialog.addDialog = true;
                 setTimeout($vue.$refs.AddForm.clearValidate, 0);
             },
             openEditDialog: function () {
                 this.modifyTitle = "编辑楼盘";
-                axios.post("GetDepModel", { id: this.$refs.dataTable.selection[0].Id }).then(function (response) {
+                axios.post("GetBuildingModel", { id: this.$refs.dataTable.selection[0].Id }).then(function (response) {
                     $vue.AddFormData = response.data;
                     $vue.Dialog.addDialog = true;
                 });
@@ -326,7 +416,7 @@
                 this.$refs.AddForm.validate(function (success, validateobj) {
                     if (success) {
                         $vue.Loading.bodyLoading = true;
-                        axios.post("Save", $vue.AddFormData).then(function (response) {
+                        axios.post($vue.AddFormData.Id ? "AddBuilding" :"EditBuilding", $vue.AddFormData).then(function (response) {
                             ActionCommonHandle(response.data, $vue, "保存成功", "保存失败", getList());
                         }).catch(function (error) {
                             ErrorCommonHandle($vue);
@@ -347,7 +437,7 @@
                     type: 'warning'
                 }).then(function () {
                     $vue.Loading.bodyLoading = true;
-                    axios.post("Delete", $vue.$refs.dataTable.selection).then(function (response) {
+                    axios.post("DeleteBuilding", $vue.$refs.dataTable.selection).then(function (response) {
                         $vue.Loading.bodyLoading = false;
                         ActionCommonHandle(response.data, $vue, "删除成功", "删除失败", getList());
                     }).catch(function (error) {
