@@ -43,7 +43,7 @@ namespace Common
         public static string GetNewFile(string dir, string oldFile)
         {
             string ext = Path.GetExtension(oldFile);
-            if (!dir.EndsWith("/")||!dir.EndsWith("\\"))
+            if (!dir.EndsWith("/")&&!dir.EndsWith("\\"))
             {
                 dir += "/";
             }

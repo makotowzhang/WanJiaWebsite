@@ -86,6 +86,7 @@ namespace Business
                             PhotoPath = newPath
                         });
                     });
+                    dp.WJ_Building.Add(entity);
                     dp.SaveChanges();
                     return true;
                 }
@@ -133,6 +134,15 @@ namespace Business
 
 
                     dp.WJ_BuildingAttr.RemoveRange(dp.WJ_BuildingAttr.Where(m => m.BuildingId == model.Id));
+                    model.BuildTypeList.ForEach(m =>
+                    {
+                        dp.WJ_BuildingAttr.Add(new WJ_BuildingAttr
+                        {
+                            BuildingId = entity.Id,
+                            AttrType = DicGroupCode.BuildingType.ToString(),
+                            DicId = m
+                        });
+                    });
                     model.BuildTagList.ForEach(m =>
                     {
                         dp.WJ_BuildingAttr.Add(new WJ_BuildingAttr
@@ -151,36 +161,25 @@ namespace Business
                             DicId = m
                         });
                     });
-                    model.BuildShowImage.ForEach(m =>
-                    {
-                        string newPath = FileHelper.GetNewFile("/Upload/BuildShow/", m);
-                        FileHelper.CutFile(rootPath + m, rootPath + newPath);
-                        dp.WJ_BuildingPhoto.Add(new WJ_BuildingPhoto
-                        {
-                            BuildingId = entity.Id,
-                            PhotoType = "Show",
-                            PhotoPath = newPath
-                        });
-                    });
+ 
 
                     var showList = dp.WJ_BuildingPhoto.Where(m => m.BuildingId == model.Id && m.PhotoType == "Show" && !model.BuildShowImage.Contains(m.PhotoPath));
                     var albumList = dp.WJ_BuildingPhoto.Where(m => m.BuildingId == model.Id && m.PhotoType == "Album" && !model.BuildAlbumList.Contains(m.PhotoPath));
                     var htList = dp.WJ_BuildingPhoto.Where(m => m.BuildingId == model.Id && m.PhotoType == "HouseType" && !model.BuildHouseTypeList.Contains(m.PhotoPath));
                     foreach (var m in showList)
                     {
-                        dp.WJ_BuildingPhoto.Remove(m);
                         File.Delete(rootPath + m.PhotoPath);
                     }
                     foreach (var m in albumList)
                     {
-                        dp.WJ_BuildingPhoto.Remove(m);
                         File.Delete(rootPath + m.PhotoPath);
                     }
                     foreach (var m in htList)
                     {
-                        dp.WJ_BuildingPhoto.Remove(m);
                         File.Delete(rootPath + m.PhotoPath);
                     }
+
+                    dp.WJ_BuildingPhoto.RemoveRange(dp.WJ_BuildingPhoto.Where(m => m.BuildingId == model.Id));
 
                     model.BuildShowImage.ForEach(m =>
                     {
@@ -280,10 +279,10 @@ namespace Business
                 model.BuildShowImage.AddRange(dp.WJ_BuildingPhoto.
                                                  Where(m => m.BuildingId == model.Id && m.PhotoType == "Show").
                                                  Select(m => m.PhotoPath));
-                model.BuildShowImage.AddRange(dp.WJ_BuildingPhoto.
+                model.BuildAlbumList.AddRange(dp.WJ_BuildingPhoto.
                                                  Where(m => m.BuildingId == model.Id && m.PhotoType == "Album").
                                                  Select(m => m.PhotoPath));
-                model.BuildShowImage.AddRange(dp.WJ_BuildingPhoto.
+                model.BuildHouseTypeList.AddRange(dp.WJ_BuildingPhoto.
                                                  Where(m => m.BuildingId == model.Id && m.PhotoType == "HouseType").
                                                  Select(m => m.PhotoPath));
                 return model;
@@ -309,7 +308,8 @@ namespace Business
                 }
                 total = list.Count();
                 var modelList = Mapper.Map<List<WJ_BuildingModel>>(list.OrderBy(m => m.Sort).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList());
-                var dicList = (from a in dp.WJ_BuildingAttr.Where(m => modelList.Select(x => x.Id).Contains(m.BuildingId))
+                var modelListId = modelList.Select(m => m.Id);
+                var dicList = (from a in dp.WJ_BuildingAttr.Where(m => modelListId.Contains(m.BuildingId))
                               join b in dp.System_DicItem on a.DicId equals b.Id
                               select new
                               {
