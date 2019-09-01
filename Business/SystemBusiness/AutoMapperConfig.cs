@@ -36,6 +36,9 @@ namespace Business.SystemBusiness
                 m.CreateMap<WJ_Building, WJ_BuildingModel>();
                 m.CreateMap<WJ_BuildingModel, WJ_Building>();
 
+                m.CreateMap<WJ_News, WJ_NewsModel>();
+                m.CreateMap<WJ_NewsModel, WJ_News>();
+
             });
         }
     }

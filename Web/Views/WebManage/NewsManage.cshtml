@@ -1,0 +1,431 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>新闻管理</title>
+    @Html.Partial("~/Views/Shared/_Head.cshtml")
+    @Html.Partial("~/Views/Shared/QuillEditor.cshtml")
+    <style>
+        .disabled .el-upload--picture-card {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="App" ref="App" v-loading="Loading.bodyLoading">
+        <template>
+            <div ref="QueryFormDiv">
+                <el-form :model="QueryFormData" :inline="true" class="Query_Form" ref="QueryForm" @@submit.native.prevent label-width="80px">
+                    <el-row>
+                        <el-col :span="6">
+                            <el-form-item label="新闻标题" prop="Title">
+                                <el-input v-model="QueryFormData.Title" placeholder="请输入新闻标题"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
+                            <el-form-item label="新闻备注" prop="Remark">
+                                <el-input v-model="QueryFormData.Remark" placeholder="请输入新闻备注"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
+                            <el-form-item label="新闻类别" prop="NewsType">
+                                <el-select v-model="QueryFormData.NewsType"
+                                           placeholder="请选择新闻类别"
+                                           multiple
+                                           collapse-tags>
+                                    <el-option v-for="item in SelectOption.NewsTypeList"
+                                               :key="item.Id"
+                                               :label="item.ItemDesc"
+                                               :value="item.Id">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="6">
+                            <el-button type="primary" @@click="onQuery" icon="el-icon-search">查询</el-button>
+                            <el-button type="primary" @@click="resetQueryForm" icon="el-icon-refresh">重置</el-button>
+                        </el-col>
+
+                    </el-row>
+
+                </el-form>
+                <el-row class="Table_Button_Row">
+                    <el-col :span="24">
+                        <el-button type="primary" v-if="ActionPermission.Add" ref="btnAdd" @@click="openAddDialog" icon="icon iconfont icon-file-add">新增</el-button>
+                        <el-button type="primary" v-if="ActionPermission.Edit" :disabled="ButtonState.btnEdit" ref="btnEdit" @@click="openEditDialog" icon="icon iconfont icon-edit">编辑</el-button>
+                        <el-button type="danger" v-if="ActionPermission.Delete" :disabled="ButtonState.btnDelete" ref="btnDelete" @@click="deleteClick" icon="icon iconfont icon-delete">删除</el-button>
+                    </el-col>
+                </el-row>
+            </div>
+            <el-table ref="dataTable"
+                      :data="tableData"
+                      :border="true"
+                      :height="tableHeight"
+                      @@selection-change="selectChange"
+                      @@row-click="rowClick"
+                      style="width: 100%;margin-top:20px;"
+                      element-loading-text="拼命加载中"
+                      element-loading-spinner="el-icon-loading"
+                      element-loading-background="rgba(200, 200,200, 0.5)"
+                      v-loading="Loading.tableLoading">
+                <el-table-column type="index"
+                                 :index="showIdex"
+                                 label=" ">
+                </el-table-column>
+                <el-table-column type="selection"
+                                 width="50">
+                </el-table-column>
+                <el-table-column prop="Title"
+                                 label="新闻标题"
+                                 width="200">
+                </el-table-column>
+                <el-table-column prop="Remark"
+                                 label="新闻备注"
+                                 width="200">
+                </el-table-column>
+                <el-table-column prop="PubUser"
+                                 label="发布人"
+                                 width="100">
+                </el-table-column>
+                <el-table-column prop="ViewTimes"
+                                 label="查看次数"
+                                 width="100">
+                </el-table-column>
+                <el-table-column prop="NewsTypeText"
+                                 label="新闻类别"
+                                 width="200">
+                </el-table-column>
+                <el-table-column prop="IsTop"
+                                 label="是否置顶"
+                                 width="80">
+                    <template slot-scope="scope">
+                        {{ scope.row.IsTop?"是":"否" }}
+                    </template>
+                </el-table-column>
+
+
+            </el-table>
+            <div ref="Pagination">
+                <el-pagination @@size-change="handleSizeChange"
+                               @@current-change="handleCurrentChange"
+                               :current-page.sync="QueryFormData.Page"
+                               :page-size.sync="QueryFormData.PageSize"
+                               :page-sizes="PaginationData.pageSizes"
+                               layout="total, sizes, prev, pager, next, jumper"
+                               :total="PaginationData.total"
+                               style="width:100%;padding-left:20px;box-sizing:border-box">
+                </el-pagination>
+            </div>
+            <el-dialog :close-on-click-modal="false" :title="modifyTitle"
+                       :visible.sync="Dialog.addDialog"
+                       width="80%">
+                <el-form :model="AddFormData" :rules="AddFormRule" label-width="80px" ref="AddForm" @@submit.native.prevent>
+                    <el-form-item label="新闻标题" prop="Title">
+                        <el-input v-model="AddFormData.Title" placeholder="请输入新闻标题"></el-input>
+                    </el-form-item>
+                    <el-form-item label="新闻备注" prop="Remark">
+                        <el-input v-model="AddFormData.Remark" placeholder="请输入新闻备注"></el-input>
+                    </el-form-item>
+                    <el-form-item label="发布人" prop="PubUser">
+                        <el-input v-model="AddFormData.PubUser" placeholder="请输入发布人"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="新闻类别" prop="NewsType">
+                        <el-select v-model="AddFormData.NewsType"
+                                   placeholder="请选择新闻类别">
+                            <el-option v-for="item in SelectOption.NewsTypeList"
+                                       :key="item.Id"
+                                       :label="item.ItemDesc"
+                                       :value="item.Id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="排序" prop="Sort">
+                        <el-input-number v-model="AddFormData.Sort" :precision="0"></el-input-number>
+                    </el-form-item>
+
+                    <el-form-item label="是否置顶" prop="IsTop">
+                        <el-switch v-model="AddFormData.IsTop"
+                                   active-color="#13ce66"
+                                   inactive-color="#ff4949">
+                        </el-switch>
+                    </el-form-item>
+                    <el-form-item label="封面图片" prop="CoverImg">
+                        <el-upload ref="CoverImgFile"
+                                   :class="{disabled:AddFormData.CoverImg!=''}"
+                                   action="UploadImg"
+                                   :on-success="uploadImgSuccess"
+                                   :on-remove="removeImg"
+                                   :limit="1"
+                                   list-type="picture-card">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item label="新闻内容" prop="NewsContent">
+                        <quill-editor ref="queditor"
+                                      :content.sync="AddFormData.NewsContent"
+                                      placeholder="请输入新闻内容"
+                                      style="height:450px;"></quill-editor>
+                    </el-form-item>
+
+                </el-form>
+
+                <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @@click="submitAddForm">保 存</el-button>
+                    <el-button @@click="cancelAddForm">取 消</el-button>
+                </span>
+            </el-dialog>
+        </template>
+    </div>
+</body>
+</html>
+<script>
+    $vue = new Vue({
+        el: "#App",
+        data: {
+            QueryFormData: {
+                Title: "",
+                Remark: "",
+                NewsType: [],
+                Page: 1,
+                PageSize: 10,
+            },
+            tableData: [],
+            tableHeight: 500,
+            ButtonState: {
+                btnEdit: true,
+                btnDelete: true,
+                btnPreview: true,
+            },
+            Dialog: {
+                addDialog: false,
+            },
+            AddFormData: {
+                Id: null,
+                Title: "",
+                Remark: "",
+                PubUser: "",
+                NewsType: "",
+                IsTop: true,
+                Sort: 0,
+                CoverImg: "",
+                NewsContent: ""
+            },
+            AddFormDataOrg: {
+                Id: null,
+                Title: "",
+                Remark: "",
+                PubUser: "",
+                NewsType: "",
+                IsTop: true,
+                Sort: 0,
+                CoverImg: "",
+                NewsContent: ""
+            },
+            AddFormRule: {
+                Title: [
+                    { required: true, message: '请填写新闻标题', trigger: 'change' },
+                    { max: 50, message: '长度不能超过50个字符', trigger: 'change' }
+                ],
+                Remark: [
+                    { required: true, message: '请填写新闻备注', trigger: 'change' },
+                    { max: 50, message: '长度不能超过50个字符', trigger: 'change' }
+                ],
+                PubUser: [
+                    { required: true, message: '请填写发布人', trigger: 'change' },
+                    { max: 50, message: '长度不能超过50个字符', trigger: 'change' }
+                ],
+                 NewsType: [
+                    { required: true, message: '请选择新闻类型', trigger: 'change' }
+                ],
+                NewsContent: [
+                    { required: true, message: '请填写新闻内容', trigger: 'change' }
+                ],
+            },
+            Loading: {
+                bodyLoading: false,
+                tableLoading: false
+            },
+            SelectOption: {
+                NewsTypeList: []
+            },
+            PaginationData: {
+                pageSizes: [10, 20, 50, 100],
+                total: 0
+            },
+            PaginationFilter: {
+            },
+            ActionPermission: {
+                Add: false,
+                Edit: false,
+                Delete: false
+            },
+            modifyTitle: ""
+        },
+        methods: {
+            onQuery: function () {
+                this.QueryFormData.Page = 1;
+                this.PaginationFilter = JSON.parse(JSON.stringify(this.QueryFormData));
+                getList();
+            },
+            showIdex: function (index) {
+                return (this.QueryFormData.Page - 1) * this.QueryFormData.PageSize + 1 + index;
+            },
+            resetQueryForm: function () {
+                this.$refs.QueryForm.resetFields();
+            },
+            openAddDialog: function () {
+                this.modifyTitle = "新增新闻";
+                $vue.AddFormData.Id = null;
+                this.Dialog.addDialog = true;
+                AutoMapper($vue.AddFormData, $vue.AddFormDataOrg);
+                setTimeout(function () {
+                    $vue.$refs.CoverImgFile.clearFiles();
+                     $vue.$refs.AddForm.clearValidate();
+                }, 0);
+            },
+            openEditDialog: function () {
+                this.modifyTitle = "编辑新闻";
+                $vue.Dialog.addDialog = true;
+                axios.post("GetNewsModel", { id: this.$refs.dataTable.selection[0].Id }).then(function (response) {
+                    AutoMapper($vue.AddFormData, response.data);
+
+                    $vue.$refs.CoverImgFile.fileList = [];
+
+                    $vue.$refs.CoverImgFile.fileList.push({ url: response.data.CoverImg });
+
+
+                });
+
+            },
+            submitAddForm: function () {
+
+                this.$refs.AddForm.validate(function (success, validateobj) {
+                    if (success) {
+                        $vue.Loading.bodyLoading = true;
+                        axios.post("AddNews", $vue.AddFormData).then(function (response) {
+                            ActionCommonHandle(response.data, $vue, "保存成功", "保存失败", getList());
+                        }).catch(function (error) {
+                            ErrorCommonHandle($vue);
+                        }).finally(function () {
+                            $vue.Loading.bodyLoading = false;
+                            $vue.Dialog.addDialog = false;
+                        });
+                    }
+                });
+            },
+            cancelAddForm: function () {
+                this.Dialog.addDialog = false;
+            },
+            deleteClick: function () {
+                this.$confirm('是否确认删除这' + this.$refs.dataTable.selection.length + '行数据', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(function () {
+                    $vue.Loading.bodyLoading = true;
+                    axios.post("DeleteNews", $vue.$refs.dataTable.selection).then(function (response) {
+                        $vue.Loading.bodyLoading = false;
+                        ActionCommonHandle(response.data, $vue, "删除成功", "删除失败", getList());
+                    }).catch(function (error) {
+                        ErrorCommonHandle($vue);
+                    }).finally(function () {
+                        $vue.Loading.bodyLoading = false;
+                    });
+                }).catch(function () {
+                    $vue.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            selectChange: function (selectValue) {
+                if (this.$refs.dataTable.selection.length == 0) {
+                    this.ButtonState.btnEdit = true;
+                    this.ButtonState.btnDelete = true;
+                }
+                else if (this.$refs.dataTable.selection.length == 1) {
+                    this.ButtonState.btnEdit = false;
+                    this.ButtonState.btnDelete = false;
+                }
+                else {
+                    this.ButtonState.btnEdit = true;
+                    this.ButtonState.btnDelete = false;
+                }
+            },
+            rowClick: function (row, event, column) {
+                this.$refs.dataTable.toggleRowSelection(row);
+            },
+            handleSizeChange: function (val) {
+                if (this.QueryFormData.Page > (this.PaginationData.total / val + 1)) {
+                    return;
+                }
+                this.PaginationFilter.Page = this.QueryFormData.Page;
+                this.PaginationFilter.PageSize = val;
+                getList(this.PaginationFilter);
+            },
+            handleCurrentChange: function (val) {
+                this.PaginationFilter.Page = val;
+                this.PaginationFilter.PageSize = this.QueryFormData.PageSize;
+                getList(this.PaginationFilter);
+            },
+            closeAddDialog: function (done) {
+                done();
+            },
+            uploadImgSuccess: function (response, file, fileList) {
+                file.url = response;
+                this.AddFormData.CoverImg = file.url;
+            },
+            removeImg: function (file, fileList) {
+                this.AddFormData.CoverImg = "";
+            },
+            DateFormat: DateFormat
+        }
+
+    });
+
+    function getList(filter) {
+        if (filter == null) {
+            filter = $vue.QueryFormData;
+        }
+        $vue.$refs.dataTable.clearSelection();
+        $vue.ButtonState.btnEdit = true;
+        $vue.ButtonState.btnDelete = true;
+        $vue.Loading.tableLoading = true;
+        axios.post("GetNewsList", filter).then(function (response) {
+            $vue.Loading.tableLoading = false;
+            $vue.tableData = response.data.List;
+            $vue.PaginationData.total = response.data.Total;
+        }).catch(function (error) {
+            $vue.Loading.tableLoading = false;
+            $vue.tableData = [];
+            $vue.PaginationData.total = 0;
+            $vue.$message({
+                type: 'error',
+                message: '服务器出错'
+            });
+        });
+    }
+
+    axios.post("/Dictionary/GetGroupItemList", { groupCode: "NewsType" }).then(function (response) {
+        $vue.SelectOption.NewsTypeList = response.data;
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    window.onresize = function () {
+        $vue.tableHeight = $vue.$refs.App.getBoundingClientRect().height -
+            $vue.$refs.QueryFormDiv.getBoundingClientRect().height -
+            $vue.$refs.Pagination.getBoundingClientRect().height - 20;
+    }
+    getList();
+
+    GetActionAuthorize($vue);
+</script>

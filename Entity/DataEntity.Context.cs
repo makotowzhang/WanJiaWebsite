@@ -39,5 +39,7 @@ namespace Entity
         public virtual DbSet<WJ_BuildingPhoto> WJ_BuildingPhoto { get; set; }
         public virtual DbSet<WJ_Customer> WJ_Customer { get; set; }
         public virtual DbSet<WJ_Building> WJ_Building { get; set; }
+        public virtual DbSet<WJ_News> WJ_News { get; set; }
+        public virtual DbSet<WJ_Investment> WJ_Investment { get; set; }
     }
 }

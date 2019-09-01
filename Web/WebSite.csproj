@@ -710,6 +710,8 @@
     <Content Include="Views\MobilePage\Index.cshtml" />
     <Content Include="Views\Shared\_MobilePageLayout.cshtml" />
     <Content Include="Views\WebManage\BuildingManage.cshtml" />
+    <Content Include="Views\WebManage\NewsManage.cshtml" />
+    <Content Include="Views\WebManage\InvestmentManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">

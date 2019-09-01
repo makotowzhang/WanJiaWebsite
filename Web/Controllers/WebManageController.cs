@@ -39,7 +39,7 @@ namespace WebSite.Controllers
 
         public ActionResult DeleteBuilding(List<WJ_BuildingModel> ids)
         {
-            return Json(new JsonMessage(service.DeleteBuilding(ids.Select(m=>m.Id).ToList(), Server.MapPath("~"))));
+            return Json(new JsonMessage(service.DeleteBuilding(ids.Select(m => m.Id).ToList(), Server.MapPath("~"))));
         }
 
         public ActionResult GetBuildingModel(Guid id)
@@ -55,7 +55,82 @@ namespace WebSite.Controllers
 
         #endregion
 
+        #region 新闻管理
+        public ActionResult NewsManage()
+        {
+            return View();
+        }
 
+        public ActionResult AddNews(WJ_NewsModel model)
+        {
+            if (model.Id.HasValue)
+            {
+                model.UpdateUser = CurrentUser.Id;
+            }
+            else
+            {
+                model.CreateUser = CurrentUser.Id;
+            }
+            return Json(new JsonMessage(service.AddNews(model, Server.MapPath("~"))));
+        }
+
+
+
+        public ActionResult GetNewsModel(int id)
+        {
+            return Json(service.GetNewsModel(id));
+        }
+
+        public ActionResult GetNewsList(WJ_NewsModelFilter filter)
+        {
+            var data = service.GetNewsList(filter, out int total);
+            return Json(new TableDataModel(total, data));
+        }
+
+        public ActionResult DeleteNews(List<WJ_NewsModel> ids)
+        {
+            return Json(new JsonMessage(service.DeleteNews(ids.Select(m => m.Id.Value).ToList())));
+        }
+        #endregion
+
+        #region 招商管理
+        public ActionResult InvestmentManage()
+        {
+            return View();
+        }
+
+        public ActionResult AddInvestment(WJ_InvestmentModel model)
+        {
+            if (model.Id.HasValue)
+            {
+                model.UpdateUser = CurrentUser.Id;
+            }
+            else
+            {
+                model.CreateUser = CurrentUser.Id;
+            }
+            return Json(new JsonMessage(service.AddInvestment(model, Server.MapPath("~"))));
+        }
+
+
+
+        public ActionResult GetInvestmentModel(int id)
+        {
+            return Json(service.GetInvestmentModel(id));
+        }
+
+        public ActionResult GetInvestmentList(WJ_InvestmentFilter filter)
+        {
+            var data = service.GetInvestmentList(filter, out int total);
+            return Json(new TableDataModel(total, data));
+        }
+
+        public ActionResult DeleteInvestment(List<WJ_InvestmentModel> ids)
+        {
+            return Json(new JsonMessage(service.DeleteInvestment(ids.Select(m => m.Id.Value).ToList())));
+        }
+
+        #endregion
 
     }
 }

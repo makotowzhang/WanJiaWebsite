@@ -64,6 +64,8 @@
     <Compile Include="SystemModel\TableDataModel.cs" />
     <Compile Include="SystemModel\UserModel.cs" />
     <Compile Include="WJ_BuildingModel.cs" />
+    <Compile Include="WJ_InvestmentModel.cs" />
+    <Compile Include="WJ_NewsModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entity\Entity.csproj">

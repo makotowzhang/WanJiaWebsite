@@ -161,7 +161,7 @@ namespace Business
                             DicId = m
                         });
                     });
- 
+
 
                     var showList = dp.WJ_BuildingPhoto.Where(m => m.BuildingId == model.Id && m.PhotoType == "Show" && !model.BuildShowImage.Contains(m.PhotoPath));
                     var albumList = dp.WJ_BuildingPhoto.Where(m => m.BuildingId == model.Id && m.PhotoType == "Album" && !model.BuildAlbumList.Contains(m.PhotoPath));
@@ -310,13 +310,13 @@ namespace Business
                 var modelList = Mapper.Map<List<WJ_BuildingModel>>(list.OrderBy(m => m.Sort).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList());
                 var modelListId = modelList.Select(m => m.Id);
                 var dicList = (from a in dp.WJ_BuildingAttr.Where(m => modelListId.Contains(m.BuildingId))
-                              join b in dp.System_DicItem on a.DicId equals b.Id
-                              select new
-                              {
-                                  a.BuildingId,
-                                  a.AttrType,
-                                  b.ItemDesc
-                              }).ToList();
+                               join b in dp.System_DicItem on a.DicId equals b.Id
+                               select new
+                               {
+                                   a.BuildingId,
+                                   a.AttrType,
+                                   b.ItemDesc
+                               }).ToList();
                 modelList.ForEach(m =>
                 {
                     m.BuildTypeListText = dicList.Where(x => x.AttrType == "BuildingType" && x.BuildingId == m.Id).Select(x => x.ItemDesc).ToList();
@@ -324,6 +324,206 @@ namespace Business
                     m.BuildPropertyTypeLsitText = dicList.Where(x => x.AttrType == "BuildPropertyType" && x.BuildingId == m.Id).Select(x => x.ItemDesc).ToList();
                 });
                 return modelList;
+            }
+        }
+        #endregion
+
+        #region 新闻管理
+        public bool AddNews(WJ_NewsModel model, string rootPath)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+
+                if (model.Id.HasValue)
+                {
+                    WJ_News entity = dp.WJ_News.FirstOrDefault(m => m.Id == model.Id.Value);
+                    entity.Title = model.Title;
+                    entity.Remark = model.Remark;
+                    entity.PubUser = model.PubUser;
+                    entity.NewsType = model.NewsType;
+                    entity.IsTop = model.IsTop;
+                    entity.Sort = model.Sort;
+                    entity.CoverImg = model.CoverImg;
+                    if (entity.CoverImg.IsNotNullOrWhiteSpace())
+                    {
+                        string newPath = FileHelper.GetNewFile("/Upload/NewsCover/", entity.CoverImg);
+                        FileHelper.CutFile(rootPath + entity.CoverImg, rootPath + newPath);
+                        entity.CoverImg = newPath;
+                    }
+                    entity.NewsContent = model.NewsContent;
+                    entity.UpdateTime = DateTime.Now;
+                }
+                else
+                {
+                    WJ_News entity = Mapper.Map<WJ_News>(model);
+                    if (entity.CoverImg.IsNotNullOrWhiteSpace())
+                    {
+                        string newPath = FileHelper.GetNewFile("/Upload/NewsCover/", entity.CoverImg);
+                        FileHelper.CutFile(rootPath + entity.CoverImg, rootPath + newPath);
+                        entity.CoverImg = newPath;
+                    }
+                    entity.IsDel = false;
+                    entity.CreateTime = DateTime.Now;
+                    dp.WJ_News.Add(entity);
+                }
+                try
+                {
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public List<WJ_NewsModel> GetNewsList(WJ_NewsModelFilter filter, out int total)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                var list = dp.WJ_News.Where(m => true);
+                if (filter.Title.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.Title.Contains(filter.Title));
+                }
+                if (filter.Remark.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.Remark.Contains(filter.Remark));
+                }
+                if (filter.NewsType.IsNotNullAndCountGtZero())
+                {
+                    list = list.Where(m => filter.NewsType.Contains(m.NewsType.Value));
+                }
+                total = list.Count();
+                var dic = dp.System_DicItem.Where(m => m.GroupCode == "NewsType").ToList();
+                var listLoc = Mapper.Map<List<WJ_NewsModel>>(list.OrderBy(m => !m.IsTop).ThenByDescending(m => m.Sort).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList());
+                listLoc.ForEach(m => m.NewsTypeText = dic.FirstOrDefault(x => x.Id == m.NewsType).ItemDesc);
+                return listLoc;
+            }
+        }
+
+        public WJ_NewsModel GetNewsModel(int id)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                return Mapper.Map<WJ_NewsModel>(dp.WJ_News.FirstOrDefault(m => m.Id == id));
+            }
+        }
+
+        public bool DeleteNews(List<int> ids)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                try
+                {
+                    dp.WJ_News.RemoveRange(dp.WJ_News.Where(m => ids.Contains(m.Id)));
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
+
+        #region 招商渠道
+        public bool AddInvestment(WJ_InvestmentModel model,string rootPath)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+
+                if (model.Id.HasValue)
+                {
+                    WJ_Investment entity = dp.WJ_Investment.FirstOrDefault(m => m.Id == model.Id.Value);
+                    entity.Title = model.Title;
+                    entity.Brief = model.Brief;
+                    entity.MinMoney = model.MinMoney;
+                    entity.MaxMoney = model.MaxMoney;
+                    entity.InvContent = model.InvContent;
+                    entity.Aera = model.Aera;
+                    entity.ComName = model.ComName;
+                    entity.ComAddress = model.ComAddress;
+                    entity.IsTop = model.IsTop;
+                    entity.Sort = model.Sort;
+                    entity.CoverImg = model.CoverImg;
+                    if (entity.CoverImg.IsNotNullOrWhiteSpace())
+                    {
+                        string newPath = FileHelper.GetNewFile("/Upload/NewsCover/", entity.CoverImg);
+                        FileHelper.CutFile(rootPath + entity.CoverImg, rootPath + newPath);
+                        entity.CoverImg = newPath;
+                    }
+                    entity.UpdateTime = DateTime.Now;
+                }
+                else
+                {
+                    WJ_Investment entity = Mapper.Map<WJ_Investment>(model);
+                    if (entity.CoverImg.IsNotNullOrWhiteSpace())
+                    {
+                        string newPath = FileHelper.GetNewFile("/Upload/NewsCover/", entity.CoverImg);
+                        FileHelper.CutFile(rootPath + entity.CoverImg, rootPath + newPath);
+                        entity.CoverImg = newPath;
+                    }
+                    entity.CreateTime = DateTime.Now;
+                    entity.PublishTime = DateTime.Now;
+                    dp.WJ_Investment.Add(entity);
+                }
+                try
+                {
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        public List<WJ_InvestmentModel> GetInvestmentList(WJ_InvestmentFilter filter, out int total)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                var list = dp.WJ_Investment.Where(m => true);
+                if (filter.Title.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.Title.Contains(filter.Title));
+                }
+                if (filter.Brief.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.Brief.Contains(filter.Brief));
+                }
+                total = list.Count();
+                var listLoc = Mapper.Map<List<WJ_InvestmentModel>>(list.OrderBy(m => !m.IsTop).ThenByDescending(m => m.Sort).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList());
+                return listLoc;
+            }
+        }
+
+        public WJ_InvestmentModel GetInvestmentModel(int id)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                return Mapper.Map<WJ_InvestmentModel>(dp.WJ_Investment.FirstOrDefault(m => m.Id == id));
+            }
+        }
+
+        public bool DeleteInvestment(List<int> ids)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                try
+                {
+                    dp.WJ_Investment.RemoveRange(dp.WJ_Investment.Where(m => ids.Contains(m.Id)));
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
         #endregion
