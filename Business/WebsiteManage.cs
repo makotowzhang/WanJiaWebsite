@@ -12,6 +12,43 @@ namespace Business
 {
     public class WebsiteManageBusiness
     {
+        #region 客户管理
+        public List<WJ_Customer> GetCustomerList(WJ_CustomerFilter filter, out int total)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                var list = dp.WJ_Customer.Where(m => true);
+                if (filter.CusName.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.CusName.Contains(filter.CusName));
+                }
+                if (filter.PhoneNo.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.PhoneNo.Contains(filter.PhoneNo));
+                }
+                total = list.Count();
+                return list.OrderByDescending(m => m.RegTime).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList();
+            }
+        }
+
+        public bool DeleteCustomer(List<int> ids)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                try
+                {
+                    dp.WJ_Customer.RemoveRange(dp.WJ_Customer.Where(m => ids.Contains(m.Id)));
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
+
         #region 楼盘管理
         public bool AddBuilding(WJ_BuildingModel model, string rootPath)
         {
@@ -517,6 +554,171 @@ namespace Business
                 try
                 {
                     dp.WJ_Investment.RemoveRange(dp.WJ_Investment.Where(m => ids.Contains(m.Id)));
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
+
+        #region 招标管理
+        public bool AddTender(WJ_TenderModel model)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+
+                if (model.Id.HasValue)
+                {
+                    WJ_Tender entity = dp.WJ_Tender.FirstOrDefault(m => m.Id == model.Id.Value);
+                    entity.ProName = model.ProName;
+                    entity.ProAddress = model.ProAddress;
+                    entity.ProTime = model.ProTime;
+                    entity.Sort = model.Sort;
+                    entity.ProInfo = model.ProInfo;
+                    entity.UpdateTime = DateTime.Now;
+                }
+                else
+                {
+                    WJ_Tender entity = Mapper.Map<WJ_Tender>(model);
+                    entity.CreateTime = DateTime.Now;
+                    dp.WJ_Tender.Add(entity);
+                }
+                try
+                {
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        public List<WJ_TenderModel> GetTenderList(WJ_TenderFilter filter, out int total)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                var list = dp.WJ_Tender.Where(m => true);
+                if (filter.ProName.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.ProName.Contains(filter.ProName));
+                }
+                if (filter.ProAddress.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.ProAddress.Contains(filter.ProAddress));
+                }
+                total = list.Count();
+                var listLoc = Mapper.Map<List<WJ_TenderModel>>(list. OrderByDescending(m => m.Sort).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList());
+                return listLoc;
+            }
+        }
+
+        public WJ_TenderModel GetTenderModel(int id)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                return Mapper.Map<WJ_TenderModel>(dp.WJ_Tender.FirstOrDefault(m => m.Id == id));
+            }
+        }
+
+        public bool DeleteTender(List<int> ids)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                try
+                {
+                    dp.WJ_Tender.RemoveRange(dp.WJ_Tender.Where(m => ids.Contains(m.Id)));
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
+
+        #region 招贤管理
+        public bool AddJob(WJ_JobModel model)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+
+                if (model.Id.HasValue)
+                {
+                    WJ_Job entity = dp.WJ_Job.FirstOrDefault(m => m.Id == model.Id.Value);
+                    entity.PositionName = model.PositionName;
+                    entity.Ability = model.Ability;
+                    entity.WorkPlace = model.WorkPlace;    
+                    entity.JobRequirements = model.JobRequirements;
+                    entity.IsImportant = model.IsImportant;
+                    entity.Sort = model.Sort;
+                    entity.UpdateTime = DateTime.Now;
+                }
+                else
+                {
+                    WJ_Job entity = Mapper.Map<WJ_Job>(model);
+                    entity.CreateTime = DateTime.Now;
+                    dp.WJ_Job.Add(entity);
+                }
+                try
+                {
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        public List<WJ_JobModel> GetJobList(WJ_JobFilter filter, out int total)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                var list = dp.WJ_Job.Where(m => true);
+                if (filter.PositionName.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.PositionName.Contains(filter.PositionName));
+                }
+                if (filter.Ability.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.Ability.Contains(filter.Ability));
+                }
+                if (filter.WorkPlace.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.WorkPlace.Contains(filter.Ability));
+                }
+                total = list.Count();
+                var listLoc = Mapper.Map<List<WJ_JobModel>>(list.OrderByDescending(m => m.Sort).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList());
+                return listLoc;
+            }
+        }
+
+        public WJ_JobModel GetJobModel(int id)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                return Mapper.Map<WJ_JobModel>(dp.WJ_Job.FirstOrDefault(m => m.Id == id));
+            }
+        }
+
+        public bool DeleteJob(List<int> ids)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                try
+                {
+                    dp.WJ_Job.RemoveRange(dp.WJ_Job.Where(m => ids.Contains(m.Id)));
                     dp.SaveChanges();
                     return true;
                 }

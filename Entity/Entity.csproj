@@ -111,7 +111,13 @@
     <Compile Include="WJ_Investment.cs">
       <DependentUpon>DataEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="WJ_Job.cs">
+      <DependentUpon>DataEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="WJ_News.cs">
+      <DependentUpon>DataEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WJ_Tender.cs">
       <DependentUpon>DataEntity.tt</DependentUpon>
     </Compile>
   </ItemGroup>

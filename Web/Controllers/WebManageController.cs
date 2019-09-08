@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Model;
 using Model.SystemModel;
 using Business;
+using Entity;
 
 namespace WebSite.Controllers
 {
@@ -18,6 +19,24 @@ namespace WebSite.Controllers
         {
             return View();
         }
+
+        #region 客户管理
+        public ActionResult CustomerManage()
+        {
+            return View();
+        }
+
+        public ActionResult GetCustomerList(WJ_CustomerFilter filter)
+        {
+            var data = service.GetCustomerList(filter, out int total);
+            return Json(new TableDataModel(total, data));
+        }
+
+        public ActionResult DeleteCustomer(List<WJ_Customer> ids)
+        {
+            return Json(new JsonMessage(service.DeleteCustomer(ids.Select(m => m.Id).ToList())));
+        }
+        #endregion
 
         #region 楼盘管理
         public ActionResult BuildingManage()
@@ -130,6 +149,83 @@ namespace WebSite.Controllers
             return Json(new JsonMessage(service.DeleteInvestment(ids.Select(m => m.Id.Value).ToList())));
         }
 
+        #endregion
+
+        #region 招标管理
+        public ActionResult TenderManage()
+        {
+            return View();
+        }
+
+        public ActionResult AddTender(WJ_TenderModel model)
+        {
+            if (model.Id.HasValue)
+            {
+                model.UpdateUser = CurrentUser.Id;
+            }
+            else
+            {
+                model.CreateUser = CurrentUser.Id;
+            }
+            return Json(new JsonMessage(service.AddTender(model)));
+        }
+
+
+
+        public ActionResult GetTenderModel(int id)
+        {
+            return Json(service.GetTenderModel(id));
+        }
+
+        public ActionResult GetTenderList(WJ_TenderFilter filter)
+        {
+            var data = service.GetTenderList(filter, out int total);
+            return Json(new TableDataModel(total, data));
+        }
+
+        public ActionResult DeleteTender(List<WJ_TenderModel> ids)
+        {
+            return Json(new JsonMessage(service.DeleteTender(ids.Select(m => m.Id.Value).ToList())));
+        }
+
+        #endregion
+
+        #region 招贤管理
+        public ActionResult JobManage()
+        {
+            return View();
+        }
+
+        public ActionResult AddJob(WJ_JobModel model)
+        {
+            if (model.Id.HasValue)
+            {
+                model.UpdateUser = CurrentUser.Id;
+            }
+            else
+            {
+                model.CreateUser = CurrentUser.Id;
+            }
+            return Json(new JsonMessage(service.AddJob(model)));
+        }
+
+
+
+        public ActionResult GetJobModel(int id)
+        {
+            return Json(service.GetJobModel(id));
+        }
+
+        public ActionResult GetJobList(WJ_JobFilter filter)
+        {
+            var data = service.GetJobList(filter, out int total);
+            return Json(new TableDataModel(total, data));
+        }
+
+        public ActionResult DeleteJob(List<WJ_JobModel> ids)
+        {
+            return Json(new JsonMessage(service.DeleteJob(ids.Select(m => m.Id.Value).ToList())));
+        }
         #endregion
 
     }

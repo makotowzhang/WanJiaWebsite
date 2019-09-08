@@ -230,6 +230,22 @@
           <Property Name="UpdateTime" Type="datetime" />
           <Property Name="UpdateUser" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="WJ_Job">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PositionName" Type="varchar" MaxLength="50" />
+          <Property Name="Ability" Type="varchar" MaxLength="50" />
+          <Property Name="WorkPlace" Type="varchar" MaxLength="200" />
+          <Property Name="JobRequirements" Type="varchar" MaxLength="500" />
+          <Property Name="IsImportant" Type="bit" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="UpdateUser" Type="uniqueidentifier" />
+          <Property Name="UpdateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="WJ_News">
           <Key>
             <PropertyRef Name="Id" />
@@ -250,6 +266,21 @@
           <Property Name="UpdateTime" Type="datetime" />
           <Property Name="UpdateUser" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="WJ_Tender">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProName" Type="varchar" MaxLength="50" />
+          <Property Name="ProAddress" Type="varchar" MaxLength="200" />
+          <Property Name="ProTime" Type="datetime" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="ProInfo" Type="varchar(max)" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="UpdateUser" Type="uniqueidentifier" />
+          <Property Name="UpdateTime" Type="datetime" />
+        </EntityType>
         <EntityContainer Name="FrameworkModelStoreContainer">
           <EntitySet Name="System_Authorize" EntityType="Self.System_Authorize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="System_DicGroup" EntityType="Self.System_DicGroup" Schema="dbo" store:Type="Tables" />
@@ -266,7 +297,9 @@
           <EntitySet Name="WJ_BuildingPhoto" EntityType="Self.WJ_BuildingPhoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Customer" EntityType="Self.WJ_Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Investment" EntityType="Self.WJ_Investment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WJ_Job" EntityType="Self.WJ_Job" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_News" EntityType="Self.WJ_News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WJ_Tender" EntityType="Self.WJ_Tender" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -289,6 +322,8 @@
           <EntitySet Name="WJ_Building" EntityType="Entity.WJ_Building" />
           <EntitySet Name="WJ_News" EntityType="Entity.WJ_News" />
           <EntitySet Name="WJ_Investment" EntityType="Entity.WJ_Investment" />
+          <EntitySet Name="WJ_Tender" EntityType="Entity.WJ_Tender" />
+          <EntitySet Name="WJ_Job" EntityType="Entity.WJ_Job" />
         </EntityContainer>
         <EntityType Name="System_Authorize">
           <Key>
@@ -534,6 +569,37 @@
           <Property Name="CreateUser" Type="Guid" Nullable="false" />
           <Property Name="UpdateTime" Type="DateTime" Precision="3" />
           <Property Name="UpdateUser" Type="Guid" />
+        </EntityType>
+        <EntityType Name="WJ_Tender">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ProTime" Type="DateTime" Precision="3" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="ProInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateUser" Type="Guid" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WJ_Job">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PositionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ability" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkPlace" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="JobRequirements" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsImportant" Type="Boolean" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateUser" Type="Guid" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -798,6 +864,39 @@
                 <ScalarProperty Name="CoverImg" ColumnName="CoverImg" />
                 <ScalarProperty Name="Brief" ColumnName="Brief" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_Tender">
+            <EntityTypeMapping TypeName="Entity.WJ_Tender">
+              <MappingFragment StoreEntitySet="WJ_Tender">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ProInfo" ColumnName="ProInfo" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="ProTime" ColumnName="ProTime" />
+                <ScalarProperty Name="ProAddress" ColumnName="ProAddress" />
+                <ScalarProperty Name="ProName" ColumnName="ProName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_Job">
+            <EntityTypeMapping TypeName="Entity.WJ_Job">
+              <MappingFragment StoreEntitySet="WJ_Job">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="IsImportant" ColumnName="IsImportant" />
+                <ScalarProperty Name="JobRequirements" ColumnName="JobRequirements" />
+                <ScalarProperty Name="WorkPlace" ColumnName="WorkPlace" />
+                <ScalarProperty Name="Ability" ColumnName="Ability" />
+                <ScalarProperty Name="PositionName" ColumnName="PositionName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

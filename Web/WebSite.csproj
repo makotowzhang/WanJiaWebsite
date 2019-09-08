@@ -387,7 +387,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\iconfont\iconfont.eot" />
@@ -712,6 +711,10 @@
     <Content Include="Views\WebManage\BuildingManage.cshtml" />
     <Content Include="Views\WebManage\NewsManage.cshtml" />
     <Content Include="Views\WebManage\InvestmentManage.cshtml" />
+    <Content Include="Views\WebManage\TenderManage.cshtml" />
+    <Content Include="Views\WebManage\JobManage.cshtml" />
+    <Content Include="Views\WebManage\CustomerManage.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">
@@ -721,6 +724,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{90fa9562-63b4-427b-93b0-b6db2c66f27f}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{CEFDE89B-E61F-491B-A773-D860A36B9A39}</Project>
+      <Name>Entity</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{0b51ae13-de95-4fc0-aab6-f2abcafebd9e}</Project>
