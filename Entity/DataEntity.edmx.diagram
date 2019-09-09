@@ -23,6 +23,8 @@
         <EntityTypeShape EntityType="Entity.WJ_Investment" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="Entity.WJ_Tender" Width="1.5" PointX="11.375" PointY="5.75" />
         <EntityTypeShape EntityType="Entity.WJ_Job" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="Entity.WJ_Appointment" Width="1.5" PointX="11.375" PointY="9.75" />
+        <EntityTypeShape EntityType="Entity.WJ_Colume" Width="1.5" PointX="13.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

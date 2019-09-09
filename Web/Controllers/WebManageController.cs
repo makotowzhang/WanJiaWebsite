@@ -228,5 +228,29 @@ namespace WebSite.Controllers
         }
         #endregion
 
+
+        #region 在线预约
+        public ActionResult AppointmentManage()
+        {
+            return View();
+        }
+
+        public ActionResult GetAppointmentList(WJ_AppointmentFilter filter)
+        {
+            var data = service.GetAppointmentList(filter, out int total);
+            return Json(new TableDataModel(total, data));
+        }
+
+        public ActionResult DeleteAppointment(List<WJ_Customer> ids)
+        {
+            return Json(new JsonMessage(service.DeleteCustomer(ids.Select(m => m.Id).ToList())));
+        }
+        #endregion
+
+
+        #region 栏目管理
+
+
+        #endregion
     }
 }

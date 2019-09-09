@@ -45,6 +45,9 @@ namespace Business.SystemBusiness
                 m.CreateMap<WJ_Job, WJ_JobModel>();
                 m.CreateMap<WJ_JobModel, WJ_Job>();
 
+                m.CreateMap<WJ_Appointment, WJ_AppointmentModel>();
+                m.CreateMap<WJ_AppointmentModel, WJ_Appointment>();
+
             });
         }
     }

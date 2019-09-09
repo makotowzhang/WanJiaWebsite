@@ -144,6 +144,23 @@
           <Property Name="UpdateUser" Type="uniqueidentifier" />
           <Property Name="UpdateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="WJ_Appointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonName" Type="varchar" MaxLength="50" />
+          <Property Name="ContactTel" Type="varchar" MaxLength="50" />
+          <Property Name="ContactEmail" Type="varchar" MaxLength="50" />
+          <Property Name="OrderTime" Type="datetime" />
+          <Property Name="OrderMessage" Type="varchar" MaxLength="500" />
+          <Property Name="BelongType" Type="varchar" MaxLength="50" />
+          <Property Name="TenderId" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="UpdateUser" Type="uniqueidentifier" />
+        </EntityType>
         <EntityType Name="WJ_Building">
           <Key>
             <PropertyRef Name="Id" />
@@ -190,6 +207,22 @@
           <Property Name="BuildingId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="PhotoType" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PhotoPath" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WJ_Colume">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ColumeName" Type="varchar" MaxLength="50" />
+          <Property Name="ColumeUrl" Type="varchar" MaxLength="200" />
+          <Property Name="ParentId" Type="uniqueidentifier" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="IsEnabled" Type="bit" />
+          <Property Name="IsDel" Type="bit" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="UpdateUser" Type="uniqueidentifier" />
+          <Property Name="UpdateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="WJ_Customer">
           <Key>
@@ -292,9 +325,11 @@
           <EntitySet Name="System_Role" EntityType="Self.System_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="System_User" EntityType="Self.System_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="System_UserRole" EntityType="Self.System_UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WJ_Appointment" EntityType="Self.WJ_Appointment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Building" EntityType="Self.WJ_Building" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_BuildingAttr" EntityType="Self.WJ_BuildingAttr" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_BuildingPhoto" EntityType="Self.WJ_BuildingPhoto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WJ_Colume" EntityType="Self.WJ_Colume" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Customer" EntityType="Self.WJ_Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Investment" EntityType="Self.WJ_Investment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Job" EntityType="Self.WJ_Job" Schema="dbo" store:Type="Tables" />
@@ -324,6 +359,8 @@
           <EntitySet Name="WJ_Investment" EntityType="Entity.WJ_Investment" />
           <EntitySet Name="WJ_Tender" EntityType="Entity.WJ_Tender" />
           <EntitySet Name="WJ_Job" EntityType="Entity.WJ_Job" />
+          <EntitySet Name="WJ_Appointment" EntityType="Entity.WJ_Appointment" />
+          <EntitySet Name="WJ_Colume" EntityType="Entity.WJ_Colume" />
         </EntityContainer>
         <EntityType Name="System_Authorize">
           <Key>
@@ -596,6 +633,39 @@
           <Property Name="JobRequirements" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IsImportant" Type="Boolean" />
           <Property Name="Sort" Type="Int32" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateUser" Type="Guid" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WJ_Appointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactTel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrderTime" Type="DateTime" Precision="3" />
+          <Property Name="OrderMessage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BelongType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TenderId" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateUser" Type="Guid" />
+        </EntityType>
+        <EntityType Name="WJ_Colume">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ColumeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColumeUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ParentId" Type="Guid" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="IsEnabled" Type="Boolean" />
+          <Property Name="IsDel" Type="Boolean" />
           <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="UpdateUser" Type="Guid" />
@@ -897,6 +967,41 @@
                 <ScalarProperty Name="WorkPlace" ColumnName="WorkPlace" />
                 <ScalarProperty Name="Ability" ColumnName="Ability" />
                 <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_Appointment">
+            <EntityTypeMapping TypeName="Entity.WJ_Appointment">
+              <MappingFragment StoreEntitySet="WJ_Appointment">
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="TenderId" ColumnName="TenderId" />
+                <ScalarProperty Name="BelongType" ColumnName="BelongType" />
+                <ScalarProperty Name="OrderMessage" ColumnName="OrderMessage" />
+                <ScalarProperty Name="OrderTime" ColumnName="OrderTime" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_Colume">
+            <EntityTypeMapping TypeName="Entity.WJ_Colume">
+              <MappingFragment StoreEntitySet="WJ_Colume">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ColumeUrl" ColumnName="ColumeUrl" />
+                <ScalarProperty Name="ColumeName" ColumnName="ColumeName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

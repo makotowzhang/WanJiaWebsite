@@ -715,6 +715,7 @@
     <Content Include="Views\WebManage\JobManage.cshtml" />
     <Content Include="Views\WebManage\CustomerManage.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\WebManage\AppointmentManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">

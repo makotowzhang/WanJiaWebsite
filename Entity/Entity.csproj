@@ -96,6 +96,9 @@
     <Compile Include="System_UserRole.cs">
       <DependentUpon>DataEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="WJ_Appointment.cs">
+      <DependentUpon>DataEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="WJ_Building.cs">
       <DependentUpon>DataEntity.tt</DependentUpon>
     </Compile>
@@ -103,6 +106,9 @@
       <DependentUpon>DataEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="WJ_BuildingPhoto.cs">
+      <DependentUpon>DataEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WJ_Colume.cs">
       <DependentUpon>DataEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="WJ_Customer.cs">

@@ -729,5 +729,59 @@ namespace Business
             }
         }
         #endregion
+
+        #region 在线预约
+
+        public List<WJ_AppointmentModel> GetAppointmentList(WJ_AppointmentFilter filter, out int total)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                var list = from a in  dp.WJ_Appointment join 
+                                b in dp.WJ_Tender on a.TenderId equals b.Id
+                            select new WJ_AppointmentModel 
+                            {
+                                 Id=a.Id,
+                                PersonName=a.PersonName,
+                                ContactTel=a.ContactTel,
+                                ContactEmail=a.ContactEmail,
+                                OrderTime=a.OrderTime,
+                                OrderMessage=a.OrderMessage,
+                                BelongType=a.BelongType,
+                                TenderName=b.ProName
+                            };
+                if (filter.PersonName.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.PersonName.Contains(filter.PersonName));
+                }
+                if (filter.ContactTel.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.ContactTel.Contains(filter.ContactTel));
+                }
+                if (filter.ContactEmail.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.ContactTel.Contains(filter.ContactEmail));
+                }
+                total = list.Count();
+                return list.OrderByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList();
+            }
+        }
+
+        public bool DeleteAppointment(List<int> ids)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                try
+                {
+                    dp.WJ_Appointment.RemoveRange(dp.WJ_Appointment.Where(m => ids.Contains(m.Id)));
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
     }
 }
