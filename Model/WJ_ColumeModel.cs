@@ -8,7 +8,7 @@ namespace Model
 {
     public class WJ_ColumeModel
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         public string ColumeName { get; set; }
         public string ColumeUrl { get; set; }
         public Guid? ParentId { get; set; }
@@ -19,7 +19,6 @@ namespace Model
         public DateTime? CreateTime { get; set; }
         public Guid? UpdateUser { get; set; }
         public DateTime? UpdateTime { get; set; }
-
-        public List<WJ_ColumeModel> Children { get;set;}
+        public List<WJ_ColumeModel> Children { get; set; } = new List<WJ_ColumeModel>();
     }
 }

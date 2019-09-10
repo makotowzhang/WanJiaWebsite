@@ -467,7 +467,7 @@ namespace Business
         #endregion
 
         #region 招商渠道
-        public bool AddInvestment(WJ_InvestmentModel model,string rootPath)
+        public bool AddInvestment(WJ_InvestmentModel model, string rootPath)
         {
             using (DataProvider dp = new DataProvider())
             {
@@ -614,7 +614,7 @@ namespace Business
                     list = list.Where(m => m.ProAddress.Contains(filter.ProAddress));
                 }
                 total = list.Count();
-                var listLoc = Mapper.Map<List<WJ_TenderModel>>(list. OrderByDescending(m => m.Sort).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList());
+                var listLoc = Mapper.Map<List<WJ_TenderModel>>(list.OrderByDescending(m => m.Sort).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList());
                 return listLoc;
             }
         }
@@ -656,7 +656,7 @@ namespace Business
                     WJ_Job entity = dp.WJ_Job.FirstOrDefault(m => m.Id == model.Id.Value);
                     entity.PositionName = model.PositionName;
                     entity.Ability = model.Ability;
-                    entity.WorkPlace = model.WorkPlace;    
+                    entity.WorkPlace = model.WorkPlace;
                     entity.JobRequirements = model.JobRequirements;
                     entity.IsImportant = model.IsImportant;
                     entity.Sort = model.Sort;
@@ -736,19 +736,20 @@ namespace Business
         {
             using (DataProvider dp = new DataProvider())
             {
-                var list = from a in  dp.WJ_Appointment join 
-                                b in dp.WJ_Tender on a.TenderId equals b.Id
-                            select new WJ_AppointmentModel 
-                            {
-                                 Id=a.Id,
-                                PersonName=a.PersonName,
-                                ContactTel=a.ContactTel,
-                                ContactEmail=a.ContactEmail,
-                                OrderTime=a.OrderTime,
-                                OrderMessage=a.OrderMessage,
-                                BelongType=a.BelongType,
-                                TenderName=b.ProName
-                            };
+                var list = from a in dp.WJ_Appointment
+                           join b in dp.WJ_Tender on a.TenderId equals b.Id
+                           select new WJ_AppointmentModel
+                           {
+                               Id = a.Id,
+                               PersonName = a.PersonName,
+                               ContactTel = a.ContactTel,
+                               ContactEmail = a.ContactEmail,
+                               OrderTime = a.OrderTime,
+                               OrderMessage = a.OrderMessage,
+                               BelongType = a.BelongType,
+                               CreateTime = a.CreateTime,
+                               TenderName = b.ProName
+                           };
                 if (filter.PersonName.IsNotNullOrWhiteSpace())
                 {
                     list = list.Where(m => m.PersonName.Contains(filter.PersonName));
@@ -782,6 +783,198 @@ namespace Business
                 }
             }
         }
+        #endregion
+
+        #region 栏目管理
+        public WJ_ColumeModel GetModelById(Guid id)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                return Mapper.Map<WJ_ColumeModel>(dp.WJ_Colume.FirstOrDefault(m => m.Id == id));
+            }
+        }
+        public List<WJ_ColumeModel> GetAllColume()
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                return GetChildColume(dp, Guid.Empty);
+            }
+        }
+        public List<WJ_ColumeModel> GetChildColume(DataProvider dp, Guid parnetId)
+        {
+            List<WJ_ColumeModel> list = new List<WJ_ColumeModel>();
+            foreach (var m in GetColumeByParentId(dp, parnetId))
+            {
+                WJ_ColumeModel model = Mapper.Map<WJ_ColumeModel>(m);
+                model.Children = GetChildColume(dp, model.Id.Value);
+                list.Add(model);
+            }
+            return list;
+        }
+        public List<WJ_Colume> GetColumeByParentId(DataProvider dp, Guid parentId)
+        {
+            return dp.WJ_Colume.Where(m => m.ParentId == parentId && m.IsDel != true).OrderBy(m=>m.Sort).ToList();
+        }
+
+        public bool AddColume(WJ_ColumeModel model, out Guid menuId)
+        {
+            if (!model.ParentId.HasValue)
+            {
+                model.ParentId = Guid.Empty;
+            }
+            var entity = Mapper.Map<WJ_Colume>(model);
+            entity.Id = Guid.NewGuid();
+            entity.IsDel = false;
+            entity.CreateTime = DateTime.Now;
+            using (DataProvider dp = new DataProvider())
+            {
+                try
+                {
+                    dp.WJ_Colume.Add(entity);
+                    dp.SaveChanges();
+                    menuId = entity.Id;
+                    return true;
+                }
+                catch
+                {
+                    menuId = Guid.Empty;
+                    return false;
+                }
+            }
+        }
+
+        public bool EidtColume(WJ_ColumeModel model)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                var entity = dp.WJ_Colume.FirstOrDefault(m => m.Id == model.Id);
+                entity.ColumeName = model.ColumeName;
+                entity.ColumeUrl = model.ColumeUrl;
+                entity.Sort = model.Sort;
+                entity.IsEnabled = model.IsEnabled;
+                entity.UpdateTime = DateTime.Now;
+                try
+                {
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool DeleteColume(Guid? id)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                try
+                {
+                    dp.WJ_Colume.FirstOrDefault(m => m.Id == id).IsDel = true;
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
+
+        #region 企业概况
+        public bool AddEnterpriseInfo(WJ_EnterpriseInfoModel model, string rootPath)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+
+                if (model.Id.HasValue)
+                {
+                    WJ_EnterpriseInfo entity = dp.WJ_EnterpriseInfo.FirstOrDefault(m => m.Id == model.Id.Value);
+                    entity.Title = model.Title;
+                    entity.InfoType = model.InfoType;
+                    entity.Title = model.Title;
+                    entity.InfoTime = model.InfoTime;
+                    entity.InfoDesc = model.InfoDesc;
+                    entity.Sort = model.Sort;
+                    entity.ImageUrl = model.ImageUrl;
+                    if (entity.ImageUrl.IsNotNullOrWhiteSpace())
+                    {
+                        string newPath = FileHelper.GetNewFile("/Upload/EnterpriseInfoCover/", entity.ImageUrl);
+                        FileHelper.CutFile(rootPath + entity.ImageUrl, rootPath + newPath);
+                        entity.ImageUrl = newPath;
+                    }
+                    entity.UpdateTime = DateTime.Now;
+                }
+                else
+                {
+                    WJ_EnterpriseInfo entity = Mapper.Map<WJ_EnterpriseInfo>(model);
+                    if (entity.ImageUrl.IsNotNullOrWhiteSpace())
+                    {
+                        string newPath = FileHelper.GetNewFile("/Upload/EnterpriseInfoCover/", entity.ImageUrl);
+                        FileHelper.CutFile(rootPath + entity.ImageUrl, rootPath + newPath);
+                        entity.ImageUrl = newPath;
+                    }
+                    entity.CreateTime = DateTime.Now;
+                    dp.WJ_EnterpriseInfo.Add(entity);
+                }
+                try
+                {
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public List<WJ_EnterpriseInfoModel> GetEnterpriseInfoList(WJ_EnterpriseInfoFilter filter, out int total)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                var list = dp.WJ_EnterpriseInfo.Where(m => true);
+                if (filter.Title.IsNotNullOrWhiteSpace())
+                {
+                    list = list.Where(m => m.Title.Contains(filter.Title));
+                }
+                if (filter.InfoType.IsNotNullAndCountGtZero())
+                {
+                    list = list.Where(m => filter.InfoType.Contains(m.InfoType));
+                }
+                total = list.Count(); 
+                return Mapper.Map<List<WJ_EnterpriseInfoModel>>(list.OrderBy(m =>m.InfoType).ThenBy(m => m.Sort).ThenByDescending(m => m.CreateTime).Skip(filter.Skip).Take(filter.PageSize).ToList()); ;
+            }
+        }
+
+
+        public WJ_EnterpriseInfoModel GetEnterpriseInfoModel(int id)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                return Mapper.Map<WJ_EnterpriseInfoModel>(dp.WJ_EnterpriseInfo.FirstOrDefault(m => m.Id == id));
+            }
+        }
+
+        public bool DeleteEnterpriseInfo(List<int> ids)
+        {
+            using (DataProvider dp = new DataProvider())
+            {
+                try
+                {
+                    dp.WJ_EnterpriseInfo.RemoveRange(dp.WJ_EnterpriseInfo.Where(m => ids.Contains(m.Id)));
+                    dp.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
         #endregion
     }
 }

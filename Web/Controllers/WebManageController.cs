@@ -249,8 +249,80 @@ namespace WebSite.Controllers
 
 
         #region 栏目管理
+        public ActionResult ColumeManage()
+        {
+            return View();
+        }
+
+        public ActionResult GetAllColume()
+        {
+            return Json(service.GetAllColume());
+        }
+
+        public ActionResult AddColume(WJ_ColumeModel model)
+        {
+            model.CreateUser = CurrentUser.Id;
+            Guid menuId = Guid.Empty;
+            return Json(new JsonMessage(service.AddColume(model, out menuId), menuId.ToString()));
+        }
+
+    
+        public ActionResult EditColume(WJ_ColumeModel model)
+        {
+            model.UpdateUser = CurrentUser.Id;
+            return Json(new JsonMessage(service.EidtColume(model)));
+        }
 
 
+        public ActionResult DeleteColume(WJ_ColumeModel model)
+        {
+            model.UpdateUser = CurrentUser.Id;
+            return Json(new JsonMessage(service.DeleteColume(model.Id)));
+        }
+
+        public ActionResult GetColume(Guid menuId)
+        {
+            return Json(service.GetModelById(menuId));
+        }
+
+        #endregion
+
+        #region 企业概况
+        public ActionResult EnterpriseInfoManage()
+        {
+            return View();
+        }
+
+        public ActionResult AddEnterpriseInfo(WJ_EnterpriseInfoModel model)
+        {
+            if (model.Id.HasValue)
+            {
+                model.UpdateUser = CurrentUser.Id;
+            }
+            else
+            {
+                model.CreateUser = CurrentUser.Id;
+            }
+            return Json(new JsonMessage(service.AddEnterpriseInfo(model, Server.MapPath("~"))));
+        }
+
+
+
+        public ActionResult GetEnterpriseInfoModel(int id)
+        {
+            return Json(service.GetEnterpriseInfoModel(id));
+        }
+
+        public ActionResult GetEnterpriseInfoList(WJ_EnterpriseInfoFilter filter)
+        {
+            var data = service.GetEnterpriseInfoList(filter, out int total);
+            return Json(new TableDataModel(total, data));
+        }
+
+        public ActionResult DeleteEnterpriseInfo(List<WJ_EnterpriseInfoModel> ids)
+        {
+            return Json(new JsonMessage(service.DeleteEnterpriseInfo(ids.Select(m => m.Id.Value).ToList())));
+        }
         #endregion
     }
 }

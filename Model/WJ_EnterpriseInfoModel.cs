@@ -1,0 +1,31 @@
+﻿using Model.SystemModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Model
+{
+    public class WJ_EnterpriseInfoModel
+    {
+        public int? Id { get; set; }
+        public string InfoType { get; set; }
+        public string ImageUrl { get; set; }
+        public string Title { get; set; }
+        public string InfoTime { get; set; }
+        public string InfoDesc { get; set; }
+        public int? Sort { get; set; }
+        public Guid? CreateUser { get; set; }
+        public DateTime? CreateTime { get; set; }
+        public Guid? UpdateUser { get; set; }
+        public DateTime? UpdateTime { get; set; }
+    }
+
+    public class WJ_EnterpriseInfoFilter : PageModel
+    {
+        public string Title { get; set; }
+
+        public List<string> InfoType { get; set; }
+    }
+}

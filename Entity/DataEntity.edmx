@@ -241,6 +241,22 @@
           <Property Name="UpdateTime" Type="datetime" />
           <Property Name="UpdateUser" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="WJ_EnterpriseInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InfoType" Type="varchar" MaxLength="50" />
+          <Property Name="ImageUrl" Type="varchar" MaxLength="200" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="InfoTime" Type="varchar" MaxLength="50" />
+          <Property Name="InfoDesc" Type="varchar" MaxLength="200" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="UpdateUser" Type="uniqueidentifier" />
+          <Property Name="UpdateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="WJ_Investment">
           <Key>
             <PropertyRef Name="Id" />
@@ -331,6 +347,7 @@
           <EntitySet Name="WJ_BuildingPhoto" EntityType="Self.WJ_BuildingPhoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Colume" EntityType="Self.WJ_Colume" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Customer" EntityType="Self.WJ_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WJ_EnterpriseInfo" EntityType="Self.WJ_EnterpriseInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Investment" EntityType="Self.WJ_Investment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_Job" EntityType="Self.WJ_Job" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WJ_News" EntityType="Self.WJ_News" Schema="dbo" store:Type="Tables" />
@@ -361,6 +378,7 @@
           <EntitySet Name="WJ_Job" EntityType="Entity.WJ_Job" />
           <EntitySet Name="WJ_Appointment" EntityType="Entity.WJ_Appointment" />
           <EntitySet Name="WJ_Colume" EntityType="Entity.WJ_Colume" />
+          <EntitySet Name="WJ_EnterpriseInfo" EntityType="Entity.WJ_EnterpriseInfo" />
         </EntityContainer>
         <EntityType Name="System_Authorize">
           <Key>
@@ -666,6 +684,22 @@
           <Property Name="Sort" Type="Int32" />
           <Property Name="IsEnabled" Type="Boolean" />
           <Property Name="IsDel" Type="Boolean" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateUser" Type="Guid" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WJ_EnterpriseInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InfoType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InfoTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InfoDesc" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Sort" Type="Int32" />
           <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="UpdateUser" Type="Guid" />
@@ -1002,6 +1036,23 @@
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="ColumeUrl" ColumnName="ColumeUrl" />
                 <ScalarProperty Name="ColumeName" ColumnName="ColumeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WJ_EnterpriseInfo">
+            <EntityTypeMapping TypeName="Entity.WJ_EnterpriseInfo">
+              <MappingFragment StoreEntitySet="WJ_EnterpriseInfo">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="InfoDesc" ColumnName="InfoDesc" />
+                <ScalarProperty Name="InfoTime" ColumnName="InfoTime" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="InfoType" ColumnName="InfoType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

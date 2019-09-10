@@ -67,6 +67,7 @@
     <Compile Include="WJ_BuildingModel.cs" />
     <Compile Include="WJ_ColumeModel.cs" />
     <Compile Include="WJ_CustomerModel.cs" />
+    <Compile Include="WJ_EnterpriseInfoModel.cs" />
     <Compile Include="WJ_InvestmentModel.cs" />
     <Compile Include="WJ_JobModel.cs" />
     <Compile Include="WJ_NewsModel.cs" />

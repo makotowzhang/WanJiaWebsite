@@ -1,0 +1,417 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>栏目管理</title>
+    @Html.Partial("~/Views/Shared/_Head.cshtml")
+    <style>
+
+        #App {
+            height: 100%;
+        }
+
+        #DivLeft {
+            float: left;
+            height: 100%;
+            width: 40%;
+        }
+
+        #DivRight {
+            padding: 20px;
+            box-sizing: border-box;
+            float: left;
+            width: 60%;
+            height: 100%;
+            border-left: 2px solid #E4E7ED;
+        }
+
+        .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+            background-color: deepskyblue;
+        }
+
+        .el-tree-node__label {
+            font-size: 16px;
+        }
+
+        .el-tree-node__content {
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+
+        .MenuIcon {
+            font-size: 28px;
+            margin-left: 15px;
+            margin-top: 15px;
+            display: inline-block;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="App" v-loading="Loading.bodyLoading">
+        <template>
+            <div id="DivLeft">
+                <el-row class="Table_Button_Row">
+                    <el-col :span="24">
+                        <el-button type="primary" @@click="addRoot">新增根栏目</el-button>
+                        <el-button type="primary" @@click="addMenu">新增子栏目</el-button>
+                        <el-button type="primary" @@click="editMenu">编辑</el-button>
+                        <el-button type="danger" @@click="deleteMenu">删除</el-button>
+                    </el-col>
+                </el-row>
+                <el-row style="margin-top:10px;">
+                    <el-col :span="24">
+                        <el-tree style=""
+                                 :data="MenuData"
+                                 :highlight-current="true"
+                                 :props="DefaultProps"
+                                 node-key="Id"
+                                 @@node-click="MenuClick"
+                                 ref="MenuTree">
+                            <span class="custom-tree-node" slot-scope="scope" :style="{color:scope.data.IsEnabled?'':'#e4e4e4'}">
+                                <i v-if="scope.data.Children!=null&&scope.data.Children.length>0" class="icon iconfont icon-folder"></i>
+                                <i v-else class="icon iconfont icon-file"></i>
+                                <span>{{ scope.data.ColumeName }}</span>
+                            </span>
+                        </el-tree>
+                    </el-col>
+                </el-row>
+            </div>
+            <div id="DivRight">
+                <el-form ref="AddForm" :rules="AddFormRule" :model="AddFormData" v-if="FormStatus.addForm" label-width="80px">
+                    <el-tag type="success">{{addFormTitle}}</el-tag>
+                    <el-form-item label="栏目名称" prop="ColumeName">
+                        <el-input v-model="AddFormData.ColumeName" placeholder="请输入栏目名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="栏目地址" prop="ColumeUrl" >
+                        <el-input v-model="AddFormData.ColumeUrl" placeholder="请输入栏目地址"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="排序" prop="Sort">
+                        <el-input-number v-model="AddFormData.Sort"></el-input-number>
+                    </el-form-item>
+                    <el-form-item label="是否启用" prop="IsEnabled">
+                        <el-switch v-model="AddFormData.IsEnabled"
+                                   active-color="#13ce66"
+                                   inactive-color="#ff4949">
+                        </el-switch>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @@click="addFormSubmit">保 存</el-button>
+                        <el-button type="warning" @@click="addMenuTypeChange">重 置</el-button>
+                    </el-form-item>
+                </el-form>
+
+                <el-form ref="EditForm" :rules="EditFormRule" :model="EditFormData" v-if="FormStatus.editForm" label-width="80px">
+                    <el-tag type="success">编辑</el-tag>
+                    <el-form-item label="栏目名称" prop="ColumeName">
+                        <el-input v-model="EditFormData.ColumeName" placeholder="请输入栏目名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="栏目地址" prop="ColumeUrl" >
+                        <el-input v-model="EditFormData.ColumeUrl" placeholder="请输入栏目地址"></el-input>
+                    </el-form-item>
+                    <el-form-item label="排序" prop="Sort">
+                        <el-input-number v-model="EditFormData.Sort"></el-input-number>
+                    </el-form-item>
+                    <el-form-item label="是否启用" prop="IsEnabled">
+                        <el-switch v-model="EditFormData.IsEnabled"
+                                   active-color="#13ce66"
+                                   inactive-color="#ff4949">
+                        </el-switch>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @@click="editFormSubmit">保 存</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </template>
+    </div>
+</body>
+</html>
+<script>
+    $vue = new Vue({
+        el: "#App",
+        data: {
+            MenuData: [],
+            DefaultProps: {
+                children: 'Children',
+                label: 'ColumeName'
+            },
+            SelectedMenu: null,
+            AddFormData: {
+                ColumeName: "",
+                ColumeUrl: "",
+                ParentId: "",
+                MenuType:"",
+                Sort: 0,
+                IsEnabled: true,
+            },
+            AddFormRule: {
+                ColumeName: [
+                    { required: true, message: '请输入栏目名称', trigger: 'change' },
+                    { max: 25, message: '长度不能超过25个字符', trigger: 'change' }
+                ],
+                ColumeUrl: [
+                    { required: true, message: '请输入栏目地址', trigger: 'change' },
+                    { max: 100, message: '长度不能超过100个字符', trigger: 'change' }
+                ]
+            },
+            EditFormData: {
+                Id: "",
+                ColumeName: "",
+                ColumeUrl: "",
+                ParentId: "",
+                Sort: 0,
+                IsEnabled: true,
+            },
+            EditFormRule: {
+                ColumeName: [
+                    { required: true, message: '请输入栏目名称', trigger: 'change' },
+                    { max: 25, message: '长度不能超过25个字符', trigger: 'change' }
+                ],
+                ColumeUrl: [
+                    { required: true, message: '请输入栏目地址', trigger: 'change' },
+                    { max: 100, message: '长度不能超过100个字符', trigger: 'change' }
+                ]
+            },
+            addFormTitle: "新增",
+            Loading: {
+                bodyLoading: false
+            },
+            FormStatus: {
+                addForm: false,
+                editForm: false
+            }
+        },
+        methods: {
+            MenuClick: function (menu) {
+                if (this.SelectedMenu != menu) {
+                    this.FormStatus.addForm = false;
+                    this.FormStatus.editForm = false;
+                }
+                this.SelectedMenu = menu;
+            },
+            addRoot: function () {
+                this.AddFormData.MenuType = "Root"
+                this.AddFormData.ColumeName = "";
+                this.AddFormData.ColumeUrl = "";
+                this.AddFormData.ParentId = "";
+                this.AddFormData.Sort = 0;
+                this.AddFormData.IsEnabled = true;
+                this.FormStatus.editForm = false;
+                this.FormStatus.addForm = true;
+                this.addFormTitle = "新增根栏目";
+                setTimeout(function () { $vue.$refs.AddForm.clearValidate(); }, 0);
+            },
+            addMenu: function () {
+                if (this.SelectedMenu == null) {
+                    this.$message({
+                        showClose: true,
+                        message: "请选择父栏目！",
+                        type: "info"
+                    })
+                    return;
+                }
+                this.AddFormData.MenuType = "";
+                this.AddFormData.ColumeName = "";
+                this.AddFormData.ColumeUrl = "";
+                this.AddFormData.ParentId = this.SelectedMenu.Id;
+                this.AddFormData.Sort = 0;
+                this.AddFormData.IsEnabled = true;
+                this.addFormTitle = "新增子栏目";
+                this.FormStatus.editForm = false;
+                this.FormStatus.addForm = true;
+                setTimeout(function () { $vue.$refs.AddForm.clearValidate(); }, 0);
+            },
+            editMenu: function () {
+                if (this.SelectedMenu == null) {
+                    this.$message({
+                        showClose: true,
+                        message: "请选择菜单！",
+                        type: "info"
+                    })
+                    return;
+                }
+                this.Loading.bodyLoading = true;
+                axios.post("GetColume", { menuId: this.SelectedMenu.Id }).then(function (request) {
+                    $vue.EditFormData = request.data;
+                    $vue.FormStatus.addForm = false;
+                    $vue.FormStatus.editForm = true;
+                    setTimeout(function () { $vue.$refs.EditForm.clearValidate(); }, 0);
+                    $vue.Loading.bodyLoading = false;
+                }).catch(function () {
+                    $vue.$message({
+                        showClose: true,
+                        message: "服务器出错！",
+                        type: "error"
+                    })
+                });
+            },
+            deleteMenu: function () {
+                if (this.SelectedMenu == null) {
+                    this.$message({
+                        showClose: true,
+                        message: "请选择需要删除的菜单！",
+                        type: "info"
+                    })
+                    return;
+                }
+                this.$confirm('是否确认删除“' + this.SelectedMenu.ColumeName + '”', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(function () {
+                    $vue.Loading.bodyLoading = true;
+                    axios.post("DeleteColume", $vue.SelectedMenu).then(function (response) {
+                        $vue.Loading.bodyLoading = false;
+                        if (response.data.success) {
+                            $vue.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                            $vue.$refs.MenuTree.remove($vue.SelectedMenu.Id);
+                        } else {
+                            $vue.$message({
+                                type: 'info',
+                                message: '删除失败!'
+                            });
+                        }
+                    }).catch(function (error) {
+                        $vue.Loading.bodyLoading = false;
+                        $vue.$message({
+                            type: 'error',
+                            message: '服务器出错!'
+                        });
+                        console.log(error);
+                    });
+
+                }).catch(function () {
+                    $vue.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            addFormSubmit: function () {
+                this.$refs.AddForm.validate(function (result, obj) {
+                    if (result) {
+                        $vue.Loading.bodyLoading = true;
+                        axios.post("AddColume", $vue.AddFormData).then(function (response) {
+                            $vue.Loading.bodyLoading = false;
+                            if (response.data.success) {
+                                $vue.$message({
+                                    showClose: true,
+                                    message: '新增成功！',
+                                    type: 'success'
+                                });
+                                if ($vue.AddFormData.MenuType == "Root") {
+                                    axios.post("GetColume", { menuId: response.data.msg }).then(function (res) {
+                                        $vue.MenuData.push(res.data);
+                                        menuSort($vue.MenuData);
+                                    });
+                                }
+                                else {
+                                    if ($vue.SelectedMenu.Children == null) {
+                                        $vue.SelectedMenu.Children = [];
+                                    }
+                                    axios.post("GetColume", { menuId: response.data.msg }).then(function (res) {
+                                        $vue.SelectedMenu.Children.push(res.data);
+                                        menuSort($vue.MenuData);
+                                    });
+                                }
+                            }
+                            else {
+                                $vue.$message({
+                                    showClose: true,
+                                    message: '新增失败！',
+                                    type: 'info'
+                                });
+                            }
+                        }).catch(function () {
+                            $vue.Loading.bodyLoading = false;
+                            $vue.$message({
+                                showClose: true,
+                                message: '服务器出错！',
+                                type: 'error'
+                            });
+                        });
+                        $vue.FormStatus.addForm = false;
+                    }
+                });
+            },
+            editFormSubmit: function () {
+                this.$refs.EditForm.validate(function (result, obj) {
+                    if (result) {
+                        $vue.Loading.bodyLoading = true;
+                        axios.post("EditColume", $vue.EditFormData).then(function (response) {
+                            $vue.Loading.bodyLoading = false;
+                            if (response.data.success) {
+                                $vue.$message({
+                                    showClose: true,
+                                    message: '修改成功！',
+                                    type: 'success'
+                                });
+                                $vue.SelectedMenu.Sort = $vue.EditFormData.Sort;
+                                $vue.SelectedMenu.ColumeName = $vue.EditFormData.ColumeName;
+                                $vue.SelectedMenu.ColumeUrl = $vue.EditFormData.ColumeUrl;
+                                $vue.SelectedMenu.IsEnabled = $vue.EditFormData.IsEnabled;
+                            }
+                            else {
+                                $vue.$message({
+                                    showClose: true,
+                                    message: '修改失败！',
+                                    type: 'info'
+                                });
+                            }
+                        }).catch(function () {
+                            $vue.Loading.bodyLoading = false;
+                            $vue.$message({
+                                showClose: true,
+                                message: '服务器出错！',
+                                type: 'error'
+                            });
+                        });
+                        $vue.FormStatus.editForm = false;
+
+                    }
+                });
+            },
+            addMenuTypeChange: function (val) {
+                this.AddFormData.ColumeName = "";
+                this.AddFormData.ColumeUrl = "";
+                this.AddFormData.IsEnabled = true;
+                this.AddFormData.Sort = 0;
+                setTimeout(function () {
+                    $vue.$refs.AddForm.clearValidate();
+                }, 0);
+
+            }
+        }
+
+    });
+    function getTree() {
+        axios.post("GetAllColume").then(function (response) {
+            $vue.MenuData = response.data;
+
+        });
+    }
+    getTree();
+    
+    function menuSort(menu) {
+        if (menu != null && menu.length > 0) {
+            menu.sort(function (a, b) {
+                return a.Sort - b.Sort;
+            });
+            menu.forEach(function (v) {
+                menuSort(v.Children);
+            });
+        }
+    }
+
+</script>

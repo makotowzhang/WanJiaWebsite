@@ -48,6 +48,8 @@ namespace Business.SystemBusiness
                 m.CreateMap<WJ_Appointment, WJ_AppointmentModel>();
                 m.CreateMap<WJ_AppointmentModel, WJ_Appointment>();
 
+                m.CreateMap<WJ_Colume, WJ_ColumeModel>();
+                m.CreateMap<WJ_ColumeModel, WJ_Colume>();
             });
         }
     }
